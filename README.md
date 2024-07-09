@@ -1,2 +1,2 @@
 # TechInsight
-TechInsight technology review platform, mobile application.
+Technological product reviews mobile application.
