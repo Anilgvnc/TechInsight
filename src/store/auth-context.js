@@ -2,8 +2,10 @@ import { createContext, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AuthContext = createContext({
-    StorePersonalInfo: (personalFormValues) => { },
-    personalInfos: '',
+    StoreNameInfo: (nameValue) => { },
+    nameInfo: '',
+    StoreMailInfo: (mailValue) => { },
+    mailInfo: '',
     token: '',
     isAuthenticated: false,
     authenticate: (token) => { },
@@ -12,10 +14,17 @@ export const AuthContext = createContext({
 
 function AuthContextProvider({ children }) {
     const [authToken, setAuthToken] = useState();
-    const [authPersonalInfos, setAuthPersonalInfos] = useState();
+    const [authNameInfo, setAuthNameInfo] = useState();
+    const [authMailInfo, setAuthMailInfo] = useState();
 
-    function StorePersonalInfo(personalFormValues) {
-        setAuthPersonalInfos(personalFormValues);
+    function StoreName(nameValue) {
+        setAuthNameInfo(nameValue);
+        AsyncStorage.setItem('displayName', nameValue);
+    }
+
+    function StoreMail(mailValue) {
+        setAuthMailInfo(mailValue);
+        AsyncStorage.setItem('email', mailValue);
     }
 
     function authenticate(token) {
@@ -24,13 +33,22 @@ function AuthContextProvider({ children }) {
     }
 
     function logout() {
+        //name
+        setAuthNameInfo(null);
+        AsyncStorage.removeItem('displayName');
+        //mail
+        setAuthMailInfo(null);
+        AsyncStorage.removeItem('email');
+        //token
         setAuthToken(null);
         AsyncStorage.removeItem('token');
     }
 
     const value = {
-        StorePersonalInfo: StorePersonalInfo,
-        personalInfos: authPersonalInfos,
+        StoreNameInfo: StoreName,
+        nameInfo: authNameInfo,
+        StoreMailInfo: StoreMail,
+        mailInfo: authMailInfo,
         token: authToken,
         isAuthenticated: !!authToken,
         authenticate: authenticate,

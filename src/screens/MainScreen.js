@@ -37,7 +37,6 @@ function MainScreen() {
         navigation.navigate('AboutProduct', {
             productId: id
         });
-        console.log(id);
     }
 
     /* TODO:

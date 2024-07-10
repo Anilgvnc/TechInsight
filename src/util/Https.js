@@ -61,8 +61,9 @@ export async function fetchProduct() {
     return products;
 }
 
+//Fetch one of the product
 export async function getProduct(id) {
-    const response = axios.get(BACKEND_URL + `/product/${id}.json`);
+    const response = await axios.get(BACKEND_URL + `/product/${id}.json`);
 
     const product = {
         pName: response.data.pName,
@@ -71,7 +72,7 @@ export async function getProduct(id) {
         description: response.data.description,
     };
 
-    return response;
+    return product;
 }
 
 export function updateProduct(id, productData) {

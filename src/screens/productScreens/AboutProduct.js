@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Card, Text } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -24,7 +22,6 @@ function AboutProduct({ route, navigation }) {
                 const products = await getProduct(productName);
                 //productsCtx.setProduct(products);
                 setProductarr(products);
-                console.log(productarr);
             } catch (error) {
                 console.log(t('fetchErrorTitle', t('fetchErrorMessage')));
             }
@@ -33,29 +30,9 @@ function AboutProduct({ route, navigation }) {
         getProducts();
     }, []);
 
-    return (
-        <View
-            style={{
-                flex: 1,
-                padding: 16,
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <Card
-                style={styles.itemContainer}
-            >
-                <View style={styles.rowContainer}>
-                    <Card.Cover style={styles.cover} source={{ uri: productarr.url }} />
-                    <View>
-                        <Card.Content>
-                            <Text style={styles.itemTitle}>{productarr.pName}</Text>
-                            <Text variant='bodyMedium'>{productarr.description}</Text>
-                        </Card.Content>
-                    </View>
-                </View>
-            </Card>
-            <ScrollView>
+
+    /* 
+    <ScrollView>
                 <FlatList
                     data={productarr.reviews}
                     renderItem={({ item }) => (
@@ -79,6 +56,30 @@ function AboutProduct({ route, navigation }) {
                     keyExtractor={(item) => item.id}
                 />
             </ScrollView>
+    */
+
+    return (
+        <View
+            style={{
+                flex: 1,
+                padding: 16,
+                alignItems: 'center',
+            }}
+        >
+            <Card
+                style={styles.itemContainer}
+            >
+                <View style={styles.rowContainer}>
+                    <Card.Cover style={styles.cover} source={{ uri: productarr.url }} />
+                    <View>
+                        <Card.Content>
+                            <Text style={styles.itemTitle}>{productarr.pName}</Text>
+                            <Text variant='bodyMedium'>{productarr.description}</Text>
+                        </Card.Content>
+                    </View>
+                </View>
+            </Card>
+
         </View>
     );
 }

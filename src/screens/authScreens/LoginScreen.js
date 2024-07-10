@@ -22,8 +22,10 @@ function LoginScreen({ navigation }) {
     async function loginHandler(formValues) {
         setIsAuthenticating(true);
         try {
-            const token = await login(formValues.email, formValues.password);
-            authCtx.authenticate(token);
+            const accountData = await login(formValues.email, formValues.password);
+            authCtx.authenticate(accountData.token);
+            authCtx.StoreNameInfo(accountData.displayName);
+            authCtx.StoreMailInfo(accountData.mail);
         } catch (error) {
             Alert.alert(
                 t('authErrorHeader'),

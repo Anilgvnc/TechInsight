@@ -38,13 +38,13 @@ function Root() {
 }
 
 const App = () => (
-  <ProductsContextProvider>
-    <ThemeContextProvider>
-      <AuthContextProvider>
+  <ThemeContextProvider>
+    <AuthContextProvider>
+      <ProductsContextProvider>
         <Root />
-      </AuthContextProvider>
-    </ThemeContextProvider>
-  </ProductsContextProvider>
+      </ProductsContextProvider>
+    </AuthContextProvider>
+  </ThemeContextProvider>
 );
 
 export default App;

@@ -47,7 +47,7 @@ function DrawerNavigator() {
       />
       <Drawer.Screen name="New review" component={NewProductScreen}
         options={{
-          title: t('newReview'),
+          title: t('newProduct'),
           drawerIcon: () => (
             <Ionicons name="add-circle-outline" size={24} />
           )

@@ -27,7 +27,7 @@ function RegisterScreen({ navigation }) {
     async function RegisterHandler(formValues) {
         setIsAuthenticating(true);
         try {
-            const token = await createUser(formValues.email, formValues.password);
+            const token = await createUser(formValues.name, formValues.email, formValues.password);
             authCtx.authenticate(token);
         } catch (error) {
             Alert.alert(

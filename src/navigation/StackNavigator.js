@@ -12,6 +12,7 @@ import ProductsContextProvider from '../store/products-context';
 import TabNavigator from './TabNavigator';
 import AboutProduct from '../screens/productScreens/AboutProduct';
 import { IconButton } from 'react-native-paper';
+import AddReview from '../screens/productScreens/AddReview';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ function MainStack() {
             {/* Add more screens if needed */}
             <Stack.Group screenOptions={{ headerShown: true }}>
                 <Stack.Screen name="AboutProduct" component={AboutProduct} />
+                <Stack.Screen name="AddReview" component={AddReview} />
             </Stack.Group>
         </Stack.Navigator>
     );

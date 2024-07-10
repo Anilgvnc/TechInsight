@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { List, Avatar, Card, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { AuthContext } from '../store/auth-context';
+import { Colors } from '../constants/styles';
 
 function AccountScreen() {
 
     const insets = useSafeAreaInsets();
+
+    const authCtx = useContext(AuthContext);
 
     return (
         <View
@@ -24,14 +28,14 @@ function AccountScreen() {
                     <View style={styles.avatar}>
                         <Avatar.Image size={108} source={require('../../assets/icon.png')} color='000000' alignContent='center' />
                     </View>
-                    <Text style={styles.username}>username</Text>
+                    <Text style={styles.username}> {authCtx.nameInfo} </Text>
                 </Card.Content>
             </Card>
             <Card style={styles.body}>
                 <Card.Content>
                     <List.Item
                         title="E-mail"
-                        description="Item description"
+                        description={authCtx.mailInfo}
                         left={props => <List.Icon {...props} icon="email" />}
                     />
                     <List.Item
@@ -71,6 +75,9 @@ const styles = StyleSheet.create({
     },
     username: {
         flex: 6,
+        color: Colors.secondary,
+        fontSize: 32,
+        fontWeight: 'bold',
         textAlignVertical: 'center',
     },
     body: {
