@@ -27,8 +27,10 @@ function RegisterScreen({ navigation }) {
     async function RegisterHandler(formValues) {
         setIsAuthenticating(true);
         try {
-            const token = await createUser(formValues.name, formValues.email, formValues.password);
-            authCtx.authenticate(token);
+            const accountData = await createUser(formValues.name, formValues.email, formValues.password);
+            authCtx.authenticate(accountData.token);
+            authCtx.StoreNameInfo(accountData.displayName);
+            authCtx.StoreMailInfo(accountData.mail);
         } catch (error) {
             Alert.alert(
                 t('authErrorHeader'),

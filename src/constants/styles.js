@@ -1,7 +1,8 @@
 export const Colors = {
     primary: '#002F81',
     secondary: '#0093FB',
-    tint: '#ffffff'
+    tint: '#ffffff',
+    shadow: '#000000'
 }
 
 export const HeaderOptions = {

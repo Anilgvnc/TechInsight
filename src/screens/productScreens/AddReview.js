@@ -8,16 +8,20 @@ import * as yup from 'yup';
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
 import { ProductsContext } from '../../store/products-context';
+import { Rating } from 'react-native-ratings';
+import { addReview } from '../../util/Https';
 
 const initialFormValues = {
-    pName: '',
-    url: '',
-    description: '',
-    createdOn: new Date().getFullYear(),
-    reviews: [],
+    rAuthor: '',
+    rTitle: '',
+    rMessage: '',
+    rRate: '',
+    createdOn: new Date().getFullYear()
 }
 
-function AddReview() {
+function AddReview({ route, navigation }) {
+    //fetch id from route
+    const productName = route.params?.productId;
 
     const [isSending, setIsSending] = useState();
     const productsCtx = useContext(ProductsContext);
@@ -27,8 +31,8 @@ function AddReview() {
     async function postHandler(formValues) {
         setIsSending(true);
         try {
-            const id = await addProduct(formValues);
-            productsCtx.addProduct({ ...formValues, id: id })
+            const id = await addReview(productName, formValues);
+            //productsCtx.addProduct({ ...formValues, id: id })
             Alert.alert(
                 t('sentSuccessfully')
             );
@@ -47,10 +51,10 @@ function AddReview() {
             <View style={styles.headerContainer}>
                 <View style={styles.textContainer}>
                     <Text variant="headlineLarge" style={styles.headertextStyle} >
-                        {t('addProduct')}
+                        {t('addReviewHeader')}
                     </Text>
                     <Text variant="titleMedium" style={styles.textStyle}>
-                        {t('addProductTitle')}
+                        {t('addReviewTitle')}
                     </Text>
                 </View>
             </View>
@@ -59,15 +63,15 @@ function AddReview() {
                     initialValues={initialFormValues}
                     onSubmit={postHandler}
                     validationSchema={yup.object().shape({
-                        pName: yup
+                        rTitle: yup
                             .string()
                             .required(),
-                        url: yup
+                        rMessage: yup
                             .string()
-                            .url()
                             .required(),
-                        description: yup
+                        rRate: yup
                             .string()
+                            .max(5)
                             .required(),
                     })}>
 
@@ -76,32 +80,36 @@ function AddReview() {
                             <View>
                                 <View>
                                     <Input
-                                        label={t('productImg')}
-                                        value={values.url}
-                                        onUpdateValue={handleChange('url')}
-                                        onBlur={() => setFieldTouched('url')}
-                                        isInvalid={touched.url && errors.url}
-                                        invalidText={errors.url}
+                                        label={t('reviewTitle')}
+                                        value={values.rTitle}
+                                        onUpdateValue={handleChange('rTitle')}
+                                        onBlur={() => setFieldTouched('rTitle')}
+                                        isInvalid={touched.rTitle && errors.rTitle}
+                                        invalidText={errors.rTitle}
                                     />
                                 </View>
                                 <View>
                                     <Input
-                                        label={t('productName')}
-                                        value={values.pName}
-                                        onUpdateValue={handleChange('pName')}
-                                        onBlur={() => setFieldTouched('pName')}
-                                        isInvalid={touched.pName && errors.pName}
-                                        invalidText={errors.pName}
+                                        label={t('reviewMessage')}
+                                        value={values.rMessage}
+                                        onUpdateValue={handleChange('rMessage')}
+                                        onBlur={() => setFieldTouched('rMessage')}
+                                        isInvalid={touched.rMessage && errors.rMessage}
+                                        invalidText={errors.rMessage}
                                     />
                                 </View>
                                 <View>
-                                    <Input
-                                        label={t('productDescription')}
-                                        value={values.description}
+                                    <Rating
+                                        imageSize={40}
+                                        onFinishRating={values.rRate}
+                                        style={styles.rating}
+                                        showRating
+                                        label={t('reviewRate')}
+                                        value={values.rRate}
                                         onUpdateValue={handleChange('description')}
                                         onBlur={() => setFieldTouched('description')}
-                                        isInvalid={touched.description && errors.description}
-                                        invalidText={errors.description}
+                                        isInvalid={touched.rRate && errors.rRate}
+                                        invalidText={errors.rRate}
                                     />
                                 </View>
                             </View>
@@ -162,4 +170,7 @@ const styles = StyleSheet.create({
     registerTextStyle: {
         textAlign: 'center'
     },
+    rating: {
+        margin: 16
+    }
 })

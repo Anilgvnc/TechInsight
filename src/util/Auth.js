@@ -10,9 +10,13 @@ export async function createUser(displayName, email, password) {
         returnSecureToken: true,
     });
 
-    const token = response.data.idToken;
+    const accountInfo = {
+        token: response.data.idToken,
+        displayName: response.data.displayName,
+        mail: response.data.email,
+    };
 
-    return token;
+    return accountInfo;
 }
 
 export async function login(email, password) {

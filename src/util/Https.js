@@ -26,11 +26,11 @@ export async function fetchProfile(id) {
     return data;
 }
 
-export function updateExpense(id, accountData) {
+export function updateAccount(id, accountData) {
     return axios.put(BACKEND_URL + `/account/${id}.json`, accountData);
 }
 
-export function deleteExpense(id) {
+export function deleteAccount(id) {
     return axios.delete(BACKEND_URL + `/account/${id}.json`);
 }
 
@@ -81,4 +81,35 @@ export function updateProduct(id, productData) {
 
 export function deleteProduct(id) {
     return axios.delete(BACKEND_URL + `/product/${id}.json`);
+}
+
+//Add Review
+export async function addReview(productId, reviewData) {
+    const response = await axios.post(BACKEND_URL + `/product/${productId}/reviews.json`, reviewData);
+    const id = response.data.name;
+    return id;
+}
+
+//Fetch Reviews
+export async function fetchReviews(productId) {
+    const response = await axios.get(BACKEND_URL + `/product/${productId}/reviews.json`);
+
+    const reviews = [];
+
+    for (const key in response.data) {
+        const dataObj = {
+            id: key,
+            rTitle: response.data[key].rTitle,
+            rMessage: response.data[key].rMessage,
+            rRate: response.data[key].rRate,
+            date: new Date(response.data[key].date)
+        };
+        reviews.push(dataObj);
+    }
+
+    return reviews;
+}
+//Delete Review
+export function deleteReview(productId, reviewId) {
+    return axios.delete(BACKEND_URL + `/product/${productId}/reviews/${reviewId}.json`);
 }

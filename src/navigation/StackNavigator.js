@@ -6,18 +6,20 @@ import { AuthContext } from '../store/auth-context';
 import ThemeContextProvider from '../store/ThemeContext';
 import LoginScreen from '../screens/authScreens/LoginScreen';
 import RegisterScreen from '../screens/authScreens/RegisterScreen';
-import { HeaderOptions } from '../constants/styles';
+import { Colors, HeaderOptions } from '../constants/styles';
 import DrawerNavigator from './DrawerNavigator';
 import ProductsContextProvider from '../store/products-context';
 import TabNavigator from './TabNavigator';
 import AboutProduct from '../screens/productScreens/AboutProduct';
 import { IconButton } from 'react-native-paper';
 import AddReview from '../screens/productScreens/AddReview';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
 
 function MainStack() {
+
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={TabNavigator} />

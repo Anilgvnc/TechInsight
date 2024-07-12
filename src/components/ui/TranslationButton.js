@@ -50,15 +50,16 @@ export default TranslationButton;
 
 const modalStyles = StyleSheet.create({
     languagesList: {
-        backgroundColor: '#6258e8',
+        backgroundColor: Colors.secondary,
+        borderRadius: 16,
     },
     modalContainer: {
-        padding: 24,
-        width: '100%'
+        padding: 16,
+        width: '100%',
     },
     languageButton: {
         padding: 16,
-        borderBottomColor: '#dddddd',
+        borderBottomColor: Colors.tint,
         borderBottomWidth: 1,
     },
     lngName: {

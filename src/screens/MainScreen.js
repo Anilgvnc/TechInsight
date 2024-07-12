@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Colors } from '../constants/styles';
 import { fetchProduct } from '../util/Https';
 import { ProductsContext } from '../store/products-context';
-import { Card, Text } from 'react-native-paper';
+import { Card, Text, Searchbar } from 'react-native-paper';
 import { ScrollView } from 'react-native-gesture-handler';
 //import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
@@ -39,6 +39,22 @@ function MainScreen() {
         });
     }
 
+    const [searchQuery, setSearchQuery] = useState();
+    const [filteredProducts, setFilteredProducts] = useState();
+    function handleChange(query) {
+        setSearchQuery(query);
+        if (query) {
+            const filtered = productarr.filter(item =>
+                item.pName.toLowerCase().includes(query.toLowerCase()) ||
+                item.description.toLowerCase().includes(query.toLowerCase())
+            );
+
+            setFilteredProducts(filtered);
+        } else {
+            setFilteredProducts(productarr);
+        }
+    }
+
     /* TODO:
      <Card
                     style={styles.itemContainer}
@@ -60,9 +76,15 @@ function MainScreen() {
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
+            <Searchbar
+                placeholder="Search"
+                style={{ marginBottom: 16 }}
+                onChangeText={handleChange}
+                value={searchQuery}
+            />
             <ScrollView>
                 <FlatList
-                    data={productarr}
+                    data={filteredProducts}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { itemClickHandler(item.id) }}>

@@ -23,25 +23,18 @@ function AccountScreen() {
                 paddingRight: insets.right,
             }}
         >
-            <Card>
-                <Card.Content style={styles.cardContainer}>
-                    <View style={styles.avatar}>
-                        <Avatar.Image size={108} source={require('../../assets/icon.png')} color='000000' alignContent='center' />
-                    </View>
-                    <Text style={styles.username}> {authCtx.nameInfo} </Text>
-                </Card.Content>
-            </Card>
             <Card style={styles.body}>
                 <Card.Content>
+
+                    <List.Item
+                        title="User Name"
+                        description={authCtx.nameInfo}
+                        left={props => <Avatar.Image style={styles.avatar} size={64} source={require('../../assets/icon.png')} color='000000' alignContent='center' />}
+                    />
                     <List.Item
                         title="E-mail"
                         description={authCtx.mailInfo}
                         left={props => <List.Icon {...props} icon="email" />}
-                    />
-                    <List.Item
-                        title="Phone"
-                        description="Item description"
-                        left={props => <List.Icon {...props} icon="phone" />}
                     />
                     <List.Item
                         title="Total reviews"
@@ -66,22 +59,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     avatar: {
-        flex: 4,
         elevation: 4,
-        shadowColor: 'black',
+        shadowColor: Colors.shadow,
         shadowOffset: { width: 1, height: 2 },
         shadowRadius: 6,
         shadowOpacity: 0.50,
-    },
-    username: {
-        flex: 6,
-        color: Colors.secondary,
-        fontSize: 32,
-        fontWeight: 'bold',
-        textAlignVertical: 'center',
+        marginRight: 16
     },
     body: {
-        marginTop: 16,
-        marginBottom: 32,
+        marginBottom: 8,
+        borderRadius: 16,
     },
 })
