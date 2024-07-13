@@ -1,9 +1,8 @@
 import axios from 'axios';
-import { LOGIN_URL } from '@env';
-import { REGISTER_URL } from '@env';
 
 export async function createUser(displayName, email, password) {
-    const response = await axios.post(REGISTER_URL, {
+    const registerUrl = process.env.REGISTER_URL;
+    const response = await axios.post(registerUrl, {
         displayName: displayName,
         email: email,
         password: password,
@@ -20,7 +19,9 @@ export async function createUser(displayName, email, password) {
 }
 
 export async function login(email, password) {
-    const response = await axios.post(LOGIN_URL, {
+    const loginUrl = process.env.LOGIN_URL;
+
+    const response = await axios.post(loginUrl, {
         email: email,
         password: password,
         returnSecureToken: true,

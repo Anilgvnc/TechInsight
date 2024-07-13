@@ -26,7 +26,7 @@ function MainScreen() {
                 //productsCtx.setProduct(products);
                 setProductarr(products);
             } catch (error) {
-                console.log(t('fetchErrorTitle', t('fetchErrorMessage')));
+                console.log(error);
             }
         }
 
@@ -84,7 +84,7 @@ function MainScreen() {
             />
             <ScrollView>
                 <FlatList
-                    data={filteredProducts}
+                    data={searchQuery ? filteredProducts : productarr}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             onPress={() => { itemClickHandler(item.id) }}>
