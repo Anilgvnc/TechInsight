@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
+import { View, StyleSheet, FlatList, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { Card, Text, Searchbar } from 'react-native-paper';
+//import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
 import { Colors } from '../constants/styles';
 import { fetchProduct } from '../util/Https';
 import { ProductsContext } from '../store/products-context';
-import { Card, Text, Searchbar } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
-//import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-
-import { AD_MOB_ANDROID, AD_MOB_IOS } from '@env';
 
 
 function MainScreen() {

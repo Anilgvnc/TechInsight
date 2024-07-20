@@ -19,6 +19,7 @@ function LoginScreen({ navigation }) {
     const [isAuthenticating, setIsAuthenticating] = useState(false);
     const authCtx = useContext(AuthContext);
 
+
     async function loginHandler(formValues) {
         setIsAuthenticating(true);
         try {

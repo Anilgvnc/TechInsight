@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-import { Card, Text, FAB, Button, } from 'react-native-paper';
+import { View, StyleSheet, FlatList, ScrollView } from 'react-native';
+import { Card, Text, FAB } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 
-import { fetchProduct, getProduct } from '../../util/Https';
+import { fetchProduct, fetchReviews, getProduct } from '../../util/Https';
 import { Colors } from '../../constants/styles';
 import { useTranslation } from 'react-i18next';
 //import { ProductsContext } from '../../store/products-context';
@@ -13,14 +13,19 @@ function AboutProduct({ route, navigation }) {
     const insets = useSafeAreaInsets();
     const { t } = useTranslation();
 
-    //const productsCtx = useContext(ProductsContext);
-    const [productarr, setProductarr] = useState([]);
-    const productName = route.params?.productId;
 
     function addReviewHandler({ id }) {
         navigation.navigate('AddReview', { productId: id })
 
     }
+
+    //Fetch product info
+    const [productarr, setProductarr] = useState([]);
+    const productName = route.params?.productId;
+    //const productsCtx = useContext(ProductsContext);
+
+    //Fetch reviews 
+    const [reviewList, setReviewList] = useState([]);
 
     useEffect(() => {
         async function getProducts() {
@@ -33,13 +38,21 @@ function AboutProduct({ route, navigation }) {
             }
         }
 
+        async function getReviews() {
+            try {
+                const reviews = await fetchReviews(productName);
+                setReviewList(reviews);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getReviews();
         getProducts();
     }, []);
 
 
-    /* 
-    
-    */
+
 
     return (
         <View
@@ -74,24 +87,23 @@ function AboutProduct({ route, navigation }) {
             <View>
                 <ScrollView>
                     <FlatList
-                        data={productarr.reviews}
+                        data={reviewList.reviews}
                         renderItem={({ item }) => (
-                            <TouchableOpacity
-                                onPress={() => { itemClickHandler(item.id) }}>
-                                <Card
-                                    style={styles.itemContainer}
-                                >
-                                    <View style={styles.rowContainer}>
-                                        <Card.Cover style={styles.cover} source={{ uri: item.url }} />
-                                        <View>
-                                            <Card.Content>
-                                                <Text style={styles.itemTitle}>{item.title}</Text>
-                                                <Text variant='bodyMedium'>{item.message}</Text>
-                                            </Card.Content>
-                                        </View>
-                                    </View>
-                                </Card>
-                            </TouchableOpacity>
+                            <Card
+                                style={styles.itemContainer}
+                            >
+                                <Card.Content>
+                                    <Text style={styles.itemTitle}>{item.title}</Text>
+                                    <Text variant='bodyMedium'>{item.message}</Text>
+                                    <Rating
+                                        imageSize={20}
+                                        readonly
+                                        onFinishRating={item.rRate}
+                                        style={styles.rating}
+                                        backgroundColor={Colors.shadow}
+                                    />
+                                </Card.Content>
+                            </Card>
                         )}
                         keyExtractor={(item) => item.id}
                     />
