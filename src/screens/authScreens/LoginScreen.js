@@ -31,7 +31,6 @@ function LoginScreen({ navigation }) {
                 t('authErrorHeader'),
                 t('authError')
             );
-            console.log(error);
             setIsAuthenticating(false);
         }
     }
