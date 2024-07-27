@@ -86,7 +86,7 @@ export function deleteProduct(id) {
 
 //Add Review
 export async function addReview(productId, reviewData) {
-    const response = await axios.post(backendUrl + `/product/${productId}/reviews.json`, reviewData);
+    const response = await axios.put(backendUrl + `/product/${productId}/reviews.json`, reviewData);
     const id = response.data.name;
     return id;
 }

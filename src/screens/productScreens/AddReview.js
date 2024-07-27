@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, Alert } from 'react-native';
-import { Button, Text } from "react-native-paper";
+import { Button, Card, Text } from "react-native-paper";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -10,6 +10,7 @@ import Input from '../../components/authUi/Input';
 import { ProductsContext } from '../../store/products-context';
 import { Rating } from 'react-native-ratings';
 import { addReview } from '../../util/Https';
+import { AuthContext } from '../../store/auth-context';
 
 const initialFormValues = {
     rAuthor: '',
@@ -24,14 +25,16 @@ function AddReview({ route, navigation }) {
     const productName = route.params?.productId;
 
     const [isSending, setIsSending] = useState();
-    const productsCtx = useContext(ProductsContext);
+    //const productsCtx = useContext(ProductsContext);
+    const authCtx = useContext(AuthContext);
 
     const { t } = useTranslation();
 
-    async function postHandler(formValues) {
+    async function postHandler() {
         setIsSending(true);
         try {
-            const id = await addReview(productName, formValues);
+            formValues.rAuthor = authCtx.nameInfo;
+            await addReview(productName, formValues);
             //productsCtx.addProduct({ ...formValues, id: id })
             Alert.alert(
                 t('sentSuccessfully')
@@ -42,6 +45,7 @@ function AddReview({ route, navigation }) {
                 t('sentErrorTitle'),
                 t('sentError')
             );
+            console.log(error);
         }
         this.formValues.clear();
     }
@@ -65,12 +69,14 @@ function AddReview({ route, navigation }) {
                     validationSchema={yup.object().shape({
                         rTitle: yup
                             .string()
+                            .min(5)
                             .required(),
                         rMessage: yup
                             .string()
+                            .min(5)
                             .required(),
                         rRate: yup
-                            .string()
+                            .number()
                             .max(5)
                             .required(),
                     })}>
@@ -98,20 +104,19 @@ function AddReview({ route, navigation }) {
                                         invalidText={errors.rMessage}
                                     />
                                 </View>
-                                <View>
+                                <Card>
                                     <Rating
                                         imageSize={40}
                                         onFinishRating={values.rRate}
                                         style={styles.rating}
                                         showRating
-                                        label={t('reviewRate')}
                                         value={values.rRate}
-                                        onUpdateValue={handleChange('description')}
-                                        onBlur={() => setFieldTouched('description')}
+                                        onUpdateValue={handleChange('rRate')}
+                                        onBlur={() => setFieldTouched('rRate')}
                                         isInvalid={touched.rRate && errors.rRate}
                                         invalidText={errors.rRate}
                                     />
-                                </View>
+                                </Card>
                             </View>
 
                             <View style={styles.buttonStyle}>

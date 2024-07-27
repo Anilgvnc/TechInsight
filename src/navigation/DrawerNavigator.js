@@ -4,12 +4,12 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Image } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 
-import CourseScreen from '../screens/CourseScreen';
 import NewProductScreen from '../screens/NewCourseScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import { useTranslation } from 'react-i18next';
 import { HeaderOptions } from '../constants/styles';
 import MainScreen from '../screens/MainScreen';
+import ProductControl from '../screens/ProductControlScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -37,11 +37,11 @@ function DrawerNavigator() {
           )
         }}
       />
-      <Drawer.Screen name="Reviews" component={CourseScreen}
+      <Drawer.Screen name="Product control" component={ProductControl}
         options={{
-          title: t('reviews'),
+          title: t('prodControl'),
           drawerIcon: () => (
-            <Ionicons name="book-outline" size={24} />
+            <Ionicons name="barcode-outline" size={24} />
           )
         }}
       />
@@ -70,9 +70,10 @@ export default DrawerNavigator;
 
 const styles = StyleSheet.create({
   logoContainer: {
-    height: 64,
+    height: 32,
     width: '100%',
-    marginBottom: 32,
+    marginBottom: 64,
+    marginTop: 64,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'

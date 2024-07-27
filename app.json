@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "TechInsight: Technologic Review Platformm",
+    "name": "TechInsight",
     "slug": "techInsightApp",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -25,9 +25,15 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
-    /*"plugins": [
+    },
+    "plugins": [
       [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ]
+      /*[
         "expo-build-properties",
         {
           "android": {
@@ -40,8 +46,8 @@
             "deploymentTarget": "13.4"
           }
         }
-      ]
-    ]*/
+      ]*/
+    ]
   }
   /*"react-native-google-mobile-ads": {
     "android_app_id": "ca-app-pub-6144382259240260~5462289946",

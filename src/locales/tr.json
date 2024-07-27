@@ -11,7 +11,7 @@
     "registerHeader": "Hesap Bilgileri",
     "registerTitle": "Hesabını oluştur.",
     "myHome": "Ana Sayfa",
-    "reviews": "Yorumlar",
+    "prodControl": "Ürün Kontrolü",
     "addReview": "Yorum Ekle",
     "ongoingCourses": "Devam Eden Kurslar",
     "expiredCourses": "Biten Kurslar",
@@ -31,5 +31,7 @@
     "emptyNotification": "Boş gözüküyor",
     "language": "Dil",
     "application-theme": "Uygulama teması",
-    "logout": "Çıkış yap"
+    "logout": "Çıkış yap",
+    "prodContrHead": "Ürün Orjinalliği Sorgulama",
+    "prodContrDisclaimer": "6769 s. Sınai Mülkiyet Kanunu’na (“SMK”) istinaden \"orjinal ürün değildir\" yazılamamaktadır."
 }

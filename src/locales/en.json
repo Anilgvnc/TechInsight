@@ -11,7 +11,7 @@
     "registerHeader": "Account Information",
     "registerTitle": "Create your account",
     "myHome": "My Home",
-    "reviews": "Reviews",
+    "prodControl": "Product Control",
     "addReview": "Add Review",
     "ongoingCourses": "Ongoing Courses",
     "expiredCourses": "Expired Courses",
@@ -31,5 +31,7 @@
     "emptyNotification": "Wow such an empty",
     "language": "Language",
     "application-theme": "Application theme",
-    "logout": "Logout"
+    "logout": "Logout",
+    "prodContrHead": "Product Originality Control",
+    "prodContrDisclaimer": "According to the Industrial Property Law no. 6769 (“SMK”), it is not possible to write \"not an original product\"."
 }

@@ -6,11 +6,7 @@ import { Colors } from '../constants/styles';
 import { fetchProduct } from '../util/Https';
 import { ProductsContext } from '../store/products-context';
 import { Card, Text, Searchbar } from 'react-native-paper';
-import { ScrollView } from 'react-native-gesture-handler';
 //import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-
-import { AD_MOB_ANDROID, AD_MOB_IOS } from '@env';
-
 
 function MainScreen() {
     const navigation = useNavigation();
@@ -82,31 +78,29 @@ function MainScreen() {
                 onChangeText={handleChange}
                 value={searchQuery}
             />
-            <ScrollView>
-                <FlatList
-                    data={searchQuery ? filteredProducts : productarr}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                            onPress={() => { itemClickHandler(item.id) }}>
-                            <Card
-                                style={styles.itemContainer}
-                            >
-                                <View style={styles.rowContainer}>
-                                    <Card.Cover style={styles.cover} source={{ uri: item.url }} />
-                                    <View>
-                                        <Card.Content>
-                                            <Text style={styles.itemTitle}>{item.pName}</Text>
-                                            <Text variant='bodyMedium'>{item.description}</Text>
-                                        </Card.Content>
-                                    </View>
+            <FlatList
+                data={searchQuery ? filteredProducts : productarr}
+                renderItem={({ item }) => (
+                    <TouchableOpacity
+                        onPress={() => { itemClickHandler(item.id) }}>
+                        <Card
+                            style={styles.itemContainer}
+                        >
+                            <View style={styles.rowContainer}>
+                                <Card.Cover style={styles.cover} source={{ uri: item.url }} />
+                                <View>
+                                    <Card.Content>
+                                        <Text style={styles.itemTitle}>{item.pName}</Text>
+                                        <Text variant='bodyMedium'>{item.description}</Text>
+                                    </Card.Content>
                                 </View>
-                            </Card>
-                        </TouchableOpacity>
-                    )}
-                    keyExtractor={(item) => item.id}
-                />
+                            </View>
+                        </Card>
+                    </TouchableOpacity>
+                )}
+                keyExtractor={(item) => item.id}
+            />
 
-            </ScrollView>
         </View>
     );
 }
@@ -116,8 +110,8 @@ export default MainScreen;
 const styles = StyleSheet.create({
     itemContainer: {
         padding: 12,
-        width: 356,
-        height: 84,
+        width: 420,
+        height: 'auto',
         marginBottom: 6,
     },
     itemTitle: {
