@@ -13,10 +13,6 @@
     "myHome": "My Home",
     "prodControl": "Product Control",
     "addReview": "Add Review",
-    "ongoingCourses": "Ongoing Courses",
-    "expiredCourses": "Expired Courses",
-    "course": "Course",
-    "branch": "Branch",
     "duration": "Duration",
     "grade": "Grade",
     "endDate": "End Date",
@@ -33,5 +29,8 @@
     "application-theme": "Application theme",
     "logout": "Logout",
     "prodContrHead": "Product Originality Control",
-    "prodContrDisclaimer": "According to the Industrial Property Law no. 6769 (“SMK”), it is not possible to write \"not an original product\"."
+    "prodContrDisclaimer": "According to the Industrial Property Law no. 6769 (“SMK”), it is not possible to write \"not an original product\".",
+    "aboutProduct": "About Product",
+    "techSpecs": "Technical Specifications",
+    "reviews": "Reviews"
 }

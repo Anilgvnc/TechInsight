@@ -127,7 +127,8 @@ const styles = StyleSheet.create({
     cardContainer: {
         padding: 16,
         width: 368,
-        marginTop: 6
+        marginTop: 6,
+        borderRadius: 16,
     },
     camera: {
         borderRadius: 16,

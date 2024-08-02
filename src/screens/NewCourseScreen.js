@@ -14,8 +14,8 @@ const initialFormValues = {
     pName: '',
     url: '',
     description: '',
+    specifications: '',
     createdOn: new Date().getFullYear(),
-    reviews: [],
 }
 
 function NewProductScreen() {
@@ -70,6 +70,10 @@ function NewProductScreen() {
                         description: yup
                             .string()
                             .required(),
+                        specifications: yup
+                            .string()
+                            .min(8)
+                            .required(),
                     })}>
 
                     {({ handleSubmit, handleChange, values, errors, setFieldTouched, touched, isValid }) => (
@@ -83,6 +87,7 @@ function NewProductScreen() {
                                         onBlur={() => setFieldTouched('url')}
                                         isInvalid={touched.url && errors.url}
                                         invalidText={errors.url}
+                                        multiline={true}
                                     />
                                 </View>
                                 <View>
@@ -103,6 +108,18 @@ function NewProductScreen() {
                                         onBlur={() => setFieldTouched('description')}
                                         isInvalid={touched.description && errors.description}
                                         invalidText={errors.description}
+                                        multiline={true}
+                                    />
+                                </View>
+                                <View>
+                                    <Input
+                                        label={t('productSpecifications')}
+                                        value={values.specifications}
+                                        onUpdateValue={handleChange('specifications')}
+                                        onBlur={() => setFieldTouched('specifications')}
+                                        isInvalid={touched.specifications && errors.specifications}
+                                        invalidText={errors.specifications}
+                                        multiline={true}
                                     />
                                 </View>
                             </View>

@@ -13,10 +13,6 @@
     "myHome": "Ana Sayfa",
     "prodControl": "Ürün Kontrolü",
     "addReview": "Yorum Ekle",
-    "ongoingCourses": "Devam Eden Kurslar",
-    "expiredCourses": "Biten Kurslar",
-    "course": "Kurs",
-    "branch": "Branş",
     "duration": "Süresi",
     "grade": "Seviye",
     "endDate": "Bitiş tarihi",
@@ -33,5 +29,8 @@
     "application-theme": "Uygulama teması",
     "logout": "Çıkış yap",
     "prodContrHead": "Ürün Orjinalliği Sorgulama",
-    "prodContrDisclaimer": "6769 s. Sınai Mülkiyet Kanunu’na (“SMK”) istinaden \"orjinal ürün değildir\" yazılamamaktadır."
+    "prodContrDisclaimer": "6769 s. Sınai Mülkiyet Kanunu’na (“SMK”) istinaden \"orjinal ürün değildir\" yazılamamaktadır.",
+    "aboutProduct": "Ürün Hakkında",
+    "techSpecs": "Teknik Özellikleri",
+    "reviews": "Yorumlar"
 }

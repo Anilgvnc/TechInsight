@@ -18,15 +18,20 @@ import { useNavigation } from '@react-navigation/native';
 const Stack = createStackNavigator();
 
 
-function MainStack() {
 
+function MainStack() {
+    const { t } = useTranslation();
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={TabNavigator} />
             {/* Add more screens if needed */}
             <Stack.Group screenOptions={{ headerShown: true }}>
-                <Stack.Screen name="AboutProduct" component={AboutProduct} />
-                <Stack.Screen name="AddReview" component={AddReview} />
+                <Stack.Screen options={{
+                    title: t('aboutProduct')
+                }} name="AboutProduct" component={AboutProduct} />
+                <Stack.Screen options={{
+                    title: t('addReview')
+                }} name="AddReview" component={AddReview} />
             </Stack.Group>
         </Stack.Navigator>
     );

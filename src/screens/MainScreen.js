@@ -51,7 +51,7 @@ function MainScreen() {
         }
     }
 
-    /* TODO:
+    /* TODO: admob
      <Card
                     style={styles.itemContainer}
                 >
@@ -110,7 +110,7 @@ export default MainScreen;
 const styles = StyleSheet.create({
     itemContainer: {
         padding: 12,
-        width: 420,
+        width: 380,
         height: 'auto',
         marginBottom: 6,
     },

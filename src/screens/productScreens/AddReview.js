@@ -1,53 +1,56 @@
 import React, { useState, Fragment, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, Alert } from 'react-native';
-import { Button, Card, Text } from "react-native-paper";
+import { Button, Text } from "react-native-paper";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
-import { ProductsContext } from '../../store/products-context';
-import { Rating } from 'react-native-ratings';
 import { addReview } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
+
 
 const initialFormValues = {
     rAuthor: '',
     rTitle: '',
     rMessage: '',
-    rRate: '',
-    createdOn: new Date().getFullYear()
-}
+    createdOn: new Date().getDate(),
+};
 
 function AddReview({ route, navigation }) {
+
     //fetch id from route
     const productName = route.params?.productId;
 
-    const [isSending, setIsSending] = useState();
+    const [isSending, setIsSending] = useState(false);
     //const productsCtx = useContext(ProductsContext);
+
+    //Set Author name
     const authCtx = useContext(AuthContext);
+    initialFormValues.rAuthor = authCtx.nameInfo;
 
     const { t } = useTranslation();
 
-    async function postHandler() {
+    async function PostHandler(formValues) {
+        console.log(formValues.rAuthor);
         setIsSending(true);
         try {
-            formValues.rAuthor = authCtx.nameInfo;
             await addReview(productName, formValues);
             //productsCtx.addProduct({ ...formValues, id: id })
             Alert.alert(
                 t('sentSuccessfully')
             );
-            setIsSending(false);
+            navigation.goBack();
         } catch (error) {
             Alert.alert(
                 t('sentErrorTitle'),
                 t('sentError')
             );
             console.log(error);
+            setIsSending(false);
         }
-        this.formValues.clear();
+
     }
 
     return (
@@ -65,7 +68,7 @@ function AddReview({ route, navigation }) {
             <View style={styles.flexBody}>
                 <Formik
                     initialValues={initialFormValues}
-                    onSubmit={postHandler}
+                    onSubmit={PostHandler}
                     validationSchema={yup.object().shape({
                         rTitle: yup
                             .string()
@@ -102,21 +105,19 @@ function AddReview({ route, navigation }) {
                                         onBlur={() => setFieldTouched('rMessage')}
                                         isInvalid={touched.rMessage && errors.rMessage}
                                         invalidText={errors.rMessage}
+                                        multiline={true}
                                     />
                                 </View>
-                                <Card>
-                                    <Rating
-                                        imageSize={40}
-                                        onFinishRating={values.rRate}
-                                        style={styles.rating}
-                                        showRating
+                                <View>
+                                    <Input
+                                        label={t('reviewRate')}
                                         value={values.rRate}
                                         onUpdateValue={handleChange('rRate')}
                                         onBlur={() => setFieldTouched('rRate')}
                                         isInvalid={touched.rRate && errors.rRate}
                                         invalidText={errors.rRate}
                                     />
-                                </Card>
+                                </View>
                             </View>
 
                             <View style={styles.buttonStyle}>
@@ -147,7 +148,8 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         padding: 24,
-    }, headerContainer: {
+    },
+    headerContainer: {
         flex: 1,
         alignContent: 'space-between',
         flexDirection: 'row',

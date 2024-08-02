@@ -86,7 +86,7 @@ export function deleteProduct(id) {
 
 //Add Review
 export async function addReview(productId, reviewData) {
-    const response = await axios.put(backendUrl + `/product/${productId}/reviews.json`, reviewData);
+    const response = await axios.post(backendUrl + `/product/${productId}/reviews.json`, reviewData);
     const id = response.data.name;
     return id;
 }
@@ -103,6 +103,7 @@ export async function fetchReviews(productId) {
             rTitle: response.data[key].rTitle,
             rMessage: response.data[key].rMessage,
             rRate: response.data[key].rRate,
+            rAuthor: response.data[key].rAuthor,
             date: new Date(response.data[key].date)
         };
         reviews.push(dataObj);
