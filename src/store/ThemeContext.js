@@ -13,8 +13,6 @@ import {
     MD2DarkTheme,
 } from 'react-native-paper';
 
-import { I18nextProvider } from 'react-i18next';
-import i18next from '../services/i18next';
 
 const CombinedDefaultTheme = {
     ...MD2LightTheme,
@@ -59,15 +57,13 @@ function ThemeContextProvider({ children }) {
 
     return (
         // Context is wired into the local state of our main component, so that its values could be propagated throughout the entire application
-        <I18nextProvider i18n={i18next} defaultNS={'translation'}>
-            <PreferencesContext.Provider value={preferences}>
-                <PaperProvider theme={theme}>
-                    <NavigationContainer theme={theme}>
-                        {children}
-                    </NavigationContainer>
-                </PaperProvider>
-            </PreferencesContext.Provider>
-        </I18nextProvider>
+        <PreferencesContext.Provider value={preferences}>
+            <PaperProvider theme={theme}>
+                <NavigationContainer theme={theme}>
+                    {children}
+                </NavigationContainer>
+            </PaperProvider>
+        </PreferencesContext.Provider>
     );
 }
 

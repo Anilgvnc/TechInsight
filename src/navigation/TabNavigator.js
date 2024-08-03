@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,6 +16,7 @@ const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   const { t } = useTranslation();
+  const [notificationNum, setNotificationNum] = useState(0);
 
   return (
     <Tab.Navigator
@@ -51,7 +52,7 @@ function TabNavigator() {
       <Tab.Screen name="Notifications" component={NotificationScreen}
         options={{
           title: t('notifications'),
-          tabBarBadge: 3,
+          tabBarBadge: notificationNum,
           tabBarBadgeStyle: {
             backgroundColor: Colors.primary, // Customize the badge background color
             borderColor: '#fff',

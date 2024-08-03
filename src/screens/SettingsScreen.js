@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Switch, IconButton, MD2Colors, useTheme, Card } from 'react-native-paper';
 
@@ -7,6 +7,7 @@ import { PreferencesContext } from '../store/ThemeContext';
 
 import { useTranslation } from 'react-i18next';
 import TranslationButton from '../components/ui/TranslationButton';
+import { Colors } from '../constants/styles';
 
 function SettingsScreen() {
     const authCtx = useContext(AuthContext);
@@ -38,7 +39,7 @@ function SettingsScreen() {
                     <Text variant='headerMedium' style={styles.textStyle} >{t('logout')}</Text>
                     <IconButton
                         icon="exit-to-app"
-                        iconColor={MD2Colors.red500}
+                        iconColor={Colors.red}
                         size={25}
                         onPress={authCtx.logout}
                     />

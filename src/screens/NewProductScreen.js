@@ -15,7 +15,7 @@ const initialFormValues = {
     url: '',
     description: '',
     specifications: '',
-    createdOn: new Date().getFullYear(),
+    createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 }
 
 function NewProductScreen() {
@@ -113,7 +113,7 @@ function NewProductScreen() {
                                 </View>
                                 <View>
                                     <Input
-                                        label={t('productSpecifications')}
+                                        label={t('techSpecs')}
                                         value={values.specifications}
                                         onUpdateValue={handleChange('specifications')}
                                         onBlur={() => setFieldTouched('specifications')}

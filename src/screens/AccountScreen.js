@@ -38,7 +38,7 @@ function AccountScreen() {
                     />
                     <List.Item
                         title="Total reviews"
-                        description="Item description"
+                        description="Coming Soon!"
                         left={props => <List.Icon {...props} icon="badge-account" />}
                     />
                 </Card.Content>

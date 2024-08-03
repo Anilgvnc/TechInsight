@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Image } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
 
-import NewProductScreen from '../screens/NewCourseScreen';
+import NewProductScreen from '../screens/NewProductScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import { useTranslation } from 'react-i18next';
 import { HeaderOptions } from '../constants/styles';

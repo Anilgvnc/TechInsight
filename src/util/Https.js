@@ -100,17 +100,24 @@ export async function fetchReviews(productId) {
     for (const key in response.data) {
         const dataObj = {
             id: key,
+            rAuthor: response.data[key].rAuthor,
+            rMail: response.data[key].rMail,
             rTitle: response.data[key].rTitle,
             rMessage: response.data[key].rMessage,
             rRate: response.data[key].rRate,
-            rAuthor: response.data[key].rAuthor,
-            date: new Date(response.data[key].date)
+            date: response.data[key].createdOn
         };
         reviews.push(dataObj);
     }
 
     return reviews;
 }
+
+//Update Review
+export function updateReview(productId, reviewId, reviewData) {
+    return axios.put(backendUrl + `/product/${productId}/reviews/${reviewId}.json`, reviewData);
+}
+
 //Delete Review
 export function deleteReview(productId, reviewId) {
     return axios.delete(backendUrl + `/product/${productId}/reviews/${reviewId}.json`);

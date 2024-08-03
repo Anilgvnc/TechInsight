@@ -3,17 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
 
 import { AuthContext } from '../store/auth-context';
-import ThemeContextProvider from '../store/ThemeContext';
 import LoginScreen from '../screens/authScreens/LoginScreen';
 import RegisterScreen from '../screens/authScreens/RegisterScreen';
-import { Colors, HeaderOptions } from '../constants/styles';
-import DrawerNavigator from './DrawerNavigator';
-import ProductsContextProvider from '../store/products-context';
+import { HeaderOptions } from '../constants/styles';
 import TabNavigator from './TabNavigator';
 import AboutProduct from '../screens/productScreens/AboutProduct';
-import { IconButton } from 'react-native-paper';
 import AddReview from '../screens/productScreens/AddReview';
-import { useNavigation } from '@react-navigation/native';
+import UpdateReview from '../screens/productScreens/UpdateReview';
 
 const Stack = createStackNavigator();
 
@@ -25,13 +21,16 @@ function MainStack() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={TabNavigator} />
             {/* Add more screens if needed */}
-            <Stack.Group screenOptions={{ headerShown: true }}>
+            <Stack.Group screenOptions={HeaderOptions}>
                 <Stack.Screen options={{
                     title: t('aboutProduct')
                 }} name="AboutProduct" component={AboutProduct} />
                 <Stack.Screen options={{
                     title: t('addReview')
                 }} name="AddReview" component={AddReview} />
+                <Stack.Screen options={{
+                    title: t('updateReview')
+                }} name="UpdateReview" component={UpdateReview} />
             </Stack.Group>
         </Stack.Navigator>
     );

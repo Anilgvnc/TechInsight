@@ -7,7 +7,7 @@ import * as yup from 'yup';
 
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
-import { addReview } from '../../util/Https';
+import { deleteReview, updateReview } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
 
 
@@ -19,10 +19,11 @@ const initialFormValues = {
     createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 };
 
-function AddReview({ route, navigation }) {
+function UpdateReview({ route, navigation }) {
 
     //fetch id from route
     const productName = route.params?.productId;
+    const reviewName = route.params?.reviewId;
 
     const [isSending, setIsSending] = useState(false);
     //const productsCtx = useContext(ProductsContext);
@@ -30,14 +31,13 @@ function AddReview({ route, navigation }) {
     //Set Author name
     const authCtx = useContext(AuthContext);
     initialFormValues.rAuthor = authCtx.nameInfo;
-    initialFormValues.rMail = authCtx.mailInfo;
 
     const { t } = useTranslation();
 
     async function PostHandler(formValues) {
         setIsSending(true);
         try {
-            await addReview(productName, formValues);
+            await updateReview(productName, reviewName, formValues);
             //productsCtx.addProduct({ ...formValues, id: id })
             navigation.goBack();
         } catch (error) {
@@ -48,18 +48,42 @@ function AddReview({ route, navigation }) {
             console.log(error);
             setIsSending(false);
         }
-
     }
+
+    const DeleteHandler = () =>
+        Alert.alert(t('deleteAlertTitle'), t('deleteAlertMsg'), [
+            {
+                text: t('cancel'),
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: t('ok'), onPress: () => {
+                    setIsSending(true);
+                    try {
+                        deleteReview(productName, reviewName);
+                        navigation.goBack();
+                    } catch (error) {
+                        Alert.alert(
+                            t('sentErrorTitle'),
+                            t('sentError')
+                        );
+                        console.log(error);
+                        setIsSending(false);
+                    }
+                }
+            },
+        ]);
 
     return (
         <View style={styles.screen}>
             <View style={styles.headerContainer}>
                 <View style={styles.textContainer}>
                     <Text variant="headlineLarge" style={styles.headertextStyle} >
-                        {t('addReviewHeader')}
+                        {t('updateReviewHeader')}
                     </Text>
                     <Text variant="titleMedium" style={styles.textStyle}>
-                        {t('addReviewTitle')}
+                        {t('updateReviewTitle')}
                     </Text>
                 </View>
             </View>
@@ -134,13 +158,26 @@ function AddReview({ route, navigation }) {
 
                     )}
                 </Formik>
+                <View style={styles.buttonStyle}>
+                    <Button
+                        mode="elevated"
+                        buttonColor={Colors.red}
+                        textColor={Colors.tint}
+                        icon={'comment-remove'}
+                        onPress={DeleteHandler}
+                        disabled={isSending}
+                        loading={isSending}
+                    >
+                        {t('delete')}
+                    </Button>
+                </View>
             </View>
 
         </View>
     );
 }
 
-export default AddReview;
+export default UpdateReview;
 
 const styles = StyleSheet.create({
     screen: {

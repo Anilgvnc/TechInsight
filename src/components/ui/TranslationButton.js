@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { Text, Modal, Portal, IconButton } from 'react-native-paper';
 
 import i18next, { languageResources } from '../../services/i18next';
 import languagesList from '../../services/languagesList.json'
 import { Colors } from '../../constants/styles';
+import { I18nContext } from '../../store/i18n-context';
 
 function TranslationButton() {
 
     const [visible, setVisible] = useState(false);
+    const i18nCtx = useContext(I18nContext);
 
     const changeLng = lng => {
         i18next.changeLanguage(lng);
+        i18nCtx.SetLang(lng);
         setVisible(false);
     };
 

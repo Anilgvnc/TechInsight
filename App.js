@@ -1,20 +1,21 @@
 import React from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState, useContext, useEffect } from 'react';
-import AppLoading from 'expo-app-loading';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { AuthNavigation } from './src/navigation/StackNavigator';
 import AuthContextProvider from './src/store/auth-context';
 import { AuthContext } from './src/store/auth-context';
 import ProductsContextProvider from './src/store/products-context';
-import ThemeContextProvider from './src/store/ThemeContext';
+import ThemeContextProvider, { PreferencesContext } from './src/store/ThemeContext';
+import { I18nContext, I18nProvider } from './src/store/i18n-context';
 
 SplashScreen.preventAutoHideAsync();
 
 function Root() {
   const [isTryingLogin, setIsTryingLogin] = useState(true);
   const authCtx = useContext(AuthContext);
+  const i18nCtx = useContext(I18nContext);
 
   useEffect(() => {
     async function fetchToken() {
@@ -30,8 +31,17 @@ function Root() {
 
       setIsTryingLogin(false);
     }
-
     fetchToken();
+
+    //i18n
+    async function SetLocale() {
+      const storedLangPref = await AsyncStorage.getItem('langPref');
+
+      if (storedLangPref) {
+        i18nCtx.SetLang(storedLangPref);
+      }
+    }
+    SetLocale();
   }, []);
 
 
@@ -44,11 +54,13 @@ function Root() {
 
 const App = () => (
   <ThemeContextProvider>
-    <AuthContextProvider>
-      <ProductsContextProvider>
-        <Root />
-      </ProductsContextProvider>
-    </AuthContextProvider>
+    <I18nProvider>
+      <AuthContextProvider>
+        <ProductsContextProvider>
+          <Root />
+        </ProductsContextProvider>
+      </AuthContextProvider>
+    </I18nProvider>
   </ThemeContextProvider>
 );
 
