@@ -55,12 +55,10 @@ function AboutProduct({ route, navigation }) {
             >
                 <View style={styles.rowContainer}>
                     <Card.Cover style={styles.cover} source={{ uri: productarr.url }} />
-                    <View>
-                        <Card.Content>
-                            <Text style={styles.itemTitle}>{productarr.pName}</Text>
-                            <Text variant='bodyMedium'>{productarr.description}</Text>
-                        </Card.Content>
-                    </View>
+                    <Card.Content>
+                        <Text style={styles.itemTitle}>{productarr.pName}</Text>
+                        <Text variant='bodyMedium'>{productarr.description}</Text>
+                    </Card.Content>
                 </View>
             </Card>
             <List.Section style={styles.itemContainer} >
@@ -68,7 +66,11 @@ function AboutProduct({ route, navigation }) {
                     title={t('techSpecs')}
                     left={props => <List.Icon {...props} icon="information-outline" />}
                 >
-                    <Card></Card>
+                    <Card style={styles.specsContainer}>
+                        <Card.Content>
+                            <Text variant='bodyMedium'>{productarr.specifications}</Text>
+                        </Card.Content>
+                    </Card>
                 </List.Accordion>
             </List.Section>
             <List.Section style={styles.itemContainer} >
@@ -138,6 +140,10 @@ const styles = StyleSheet.create({
         width: 308,
         height: 'auto',
         marginBottom: 4
+    },
+    specsContainer: {
+        width: 380,
+        height: 'auto'
     },
     itemTitle: {
         fontSize: 24,

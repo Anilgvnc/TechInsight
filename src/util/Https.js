@@ -69,8 +69,8 @@ export async function getProduct(id) {
     const product = {
         pName: response.data.pName,
         url: response.data.url,
-        date: new Date(response.data.date),
         description: response.data.description,
+        specifications: response.data.specifications,
     };
 
     return product;
