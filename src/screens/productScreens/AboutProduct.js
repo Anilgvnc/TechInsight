@@ -26,16 +26,6 @@ function AboutProduct({ route, navigation }) {
         navigation.navigate('UpdateReview', { productId: productName, reviewId: reviewName });
     }
 
-    function TotalRate() {
-        var totalRate = 0;
-        for (let i = 0; i < reviewsArr.length; i++) {
-            const rate = parseFloat(reviewsArr[i].rRate);
-            totalRate += (rate / i);
-        }
-
-        return totalRate;
-    }
-
     useEffect(() => {
         async function getProducts() {
             try {
@@ -70,15 +60,6 @@ function AboutProduct({ route, navigation }) {
                             <Text style={styles.itemTitle}>{productarr.pName}</Text>
                             <Text variant='bodyMedium'>{productarr.description}</Text>
                         </Card.Content>
-                        <Card.Actions>
-                            <Rating
-                                imageSize={20}
-                                readonly
-                                startingValue={TotalRate()}
-                                style={styles.rating}
-                                backgroundColor={Colors.shadow}
-                            />
-                        </Card.Actions>
                     </View>
                 </View>
             </Card>

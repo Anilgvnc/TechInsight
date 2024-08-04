@@ -22,7 +22,7 @@ function DrawerNavigator() {
         return (
           <SafeAreaView>
             <View style={styles.logoContainer}>
-              <Image style={styles.avatar} source={require('../../assets/icon.png')} />
+              <Image style={styles.avatar} source={require('../../assets/logo.png')} />
             </View>
             <DrawerItemList{...props} />
           </SafeAreaView>
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
   logoContainer: {
     height: 32,
     width: '100%',
-    marginBottom: 64,
-    marginTop: 64,
+    marginBottom: 32,
+    marginTop: 48,
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'
