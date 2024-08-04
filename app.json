@@ -21,7 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anilgvnc.techInsightApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -32,8 +37,8 @@
         {
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
         }
-      ]
-      /*[
+      ],
+      [
         "expo-build-properties",
         {
           "android": {
@@ -46,11 +51,18 @@
             "deploymentTarget": "13.4"
           }
         }
-      ]*/
-    ]
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c076778e-722b-43a1-920e-b7aecfc6cea5"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c076778e-722b-43a1-920e-b7aecfc6cea5"
+    }
   }
-  /*"react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-6144382259240260~5462289946",
-    "ios_app_id": "ca-app-pub-6144382259240260~1736180817"
-  }*/
 }

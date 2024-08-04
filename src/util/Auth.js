@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function createUser(displayName, email, password) {
-    const registerUrl = process.env.REGISTER_URL;
+    const registerUrl = process.env.EXPO_PUBLIC_REGISTER_URL;
     const response = await axios.post(registerUrl, {
         displayName: displayName,
         email: email,
@@ -19,7 +19,7 @@ export async function createUser(displayName, email, password) {
 }
 
 export async function login(email, password) {
-    const loginUrl = process.env.LOGIN_URL;
+    const loginUrl = process.env.EXPO_PUBLIC_LOGIN_URL;
 
     const response = await axios.post(loginUrl, {
         email: email,

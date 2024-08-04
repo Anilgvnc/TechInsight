@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { Colors } from '../constants/styles';
-import { fetchProduct } from '../util/Https';
-import { ProductsContext } from '../store/products-context';
 import { Card, Text, Searchbar } from 'react-native-paper';
-//import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
+
+import { ProductsContext } from '../store/products-context';
+import { fetchProduct } from '../util/Https';
+import { Colors } from '../constants/styles';
 
 function MainScreen() {
     const navigation = useNavigation();
@@ -51,25 +51,6 @@ function MainScreen() {
         }
     }
 
-    /* TODO: admob
-     <Card
-                    style={styles.itemContainer}
-                >
-                    <BannerAd
-                        unitId={Platform.OS === 'ios'
-                            ? AD_MOB_IOS
-                            : AD_MOB_ANDROID
-                        }
-                        size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
-                        requestOptions={{
-                            networkExtras: {
-                                collapsible: 'bottom',
-                            },
-                        }}
-                    />
-                </Card>
-    */
-
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
             <Searchbar
@@ -100,7 +81,6 @@ function MainScreen() {
                 )}
                 keyExtractor={(item) => item.id}
             />
-
         </View>
     );
 }

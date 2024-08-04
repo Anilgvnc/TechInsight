@@ -25,7 +25,7 @@ function ProductControl() {
 
     async function FetchProductInfo(barcode) {
         try {
-            const response = await axios.get(process.env.UPCITEM_URL + barcode);
+            const response = await axios.get(process.env.EXPO_PUBLIC_UPCITEM_URL + barcode);
             setProduct(response.data.items[0]);
         } catch (error) {
             console.error(error);
