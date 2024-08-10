@@ -113,6 +113,22 @@ export async function fetchReviews(productId) {
     return reviews;
 }
 
+//Fetch one of the review
+export async function fetchReview(productId, reviewId) {
+    const response = await axios.get(backendUrl + `/product/${productId}/reviews/${reviewId}.json`);
+
+    const review = {
+        rAuthor: response.data.rAuthor,
+        rMail: response.data.rMail,
+        rTitle: response.data.rTitle,
+        rMessage: response.data.rMessage,
+        rRate: response.data.rRate,
+        date: response.data.createdOn
+    };
+
+    return review;
+}
+
 //Update Review
 export function updateReview(productId, reviewId, reviewData) {
     return axios.put(backendUrl + `/product/${productId}/reviews/${reviewId}.json`, reviewData);
@@ -122,3 +138,18 @@ export function updateReview(productId, reviewId, reviewData) {
 export function deleteReview(productId, reviewId) {
     return axios.delete(backendUrl + `/product/${productId}/reviews/${reviewId}.json`);
 }
+
+/*
+//Get point of user
+export function getPoints(userMail) {
+    const points = [];
+    const response = axios.get(backendUrl + `/product/reviews/${userMail}.json`);
+    for (const key in response.data) {
+        const dataObj = {
+            id: key,
+        };
+        points.push(dataObj);
+    }
+    return points.length;
+}
+    */

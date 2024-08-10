@@ -13,7 +13,8 @@ function Input({
     password,
     onBlur,
     email,
-    multiline
+    multiline,
+    placeholder
 }) {
 
     const [seePassword, setSeePassword] = useState(true);
@@ -34,6 +35,7 @@ function Input({
                 value={value}
                 onBlur={onBlur}
                 multiline={multiline}
+                placeholder={placeholder}
                 secureTextEntry={password ? seePassword : false}
                 right={password ? <TextInput.Icon icon="eye" onPress={() => setSeePassword(!seePassword)} /> : false ||
                     email ? <TextInput.Icon icon="email" /> : false}

@@ -20,16 +20,19 @@ function MainStack() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Main" component={TabNavigator} />
-            {/* Add more screens if needed */}
             <Stack.Group screenOptions={HeaderOptions}>
                 <Stack.Screen options={{
                     title: t('aboutProduct')
                 }} name="AboutProduct" component={AboutProduct} />
                 <Stack.Screen options={{
-                    title: t('addReview')
+                    presentation: "transparentModal",
+                    headerShown: false,
+                    animationTypeForReplace: "slide_from_bottom"
                 }} name="AddReview" component={AddReview} />
                 <Stack.Screen options={{
-                    title: t('updateReview')
+                    presentation: "transparentModal",
+                    headerShown: false,
+                    animation: "slide_from_bottom"
                 }} name="UpdateReview" component={UpdateReview} />
             </Stack.Group>
         </Stack.Navigator>

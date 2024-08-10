@@ -1,14 +1,15 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, Pressable } from 'react-native';
 import { Button, Text } from "react-native-paper";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
-import { deleteReview, updateReview } from '../../util/Https';
+import { deleteReview, fetchReview, updateReview } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
+import { BlurView } from 'expo-blur';
 
 
 const initialFormValues = {
@@ -26,6 +27,7 @@ function UpdateReview({ route, navigation }) {
     const reviewName = route.params?.reviewId;
 
     const [isSending, setIsSending] = useState(false);
+    const [review, setReview] = useState({})
     //const productsCtx = useContext(ProductsContext);
 
     //Set Author name
@@ -33,6 +35,19 @@ function UpdateReview({ route, navigation }) {
     initialFormValues.rAuthor = authCtx.nameInfo;
 
     const { t } = useTranslation();
+
+    useEffect(() => {
+        async function getReview() {
+            try {
+                const review = await fetchReview(productName, reviewName);
+                setReview(review);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getReview();
+    }, []);
 
     async function PostHandler(formValues) {
         setIsSending(true);
@@ -77,102 +92,122 @@ function UpdateReview({ route, navigation }) {
 
     return (
         <View style={styles.screen}>
-            <View style={styles.headerContainer}>
-                <View style={styles.textContainer}>
-                    <Text variant="headlineLarge" style={styles.headertextStyle} >
-                        {t('updateReviewHeader')}
-                    </Text>
-                    <Text variant="titleMedium" style={styles.textStyle}>
-                        {t('updateReviewTitle')}
-                    </Text>
+            <Pressable
+                onPress={() => navigation.goBack()}
+                style={{ flex: 1 }}
+            />
+            <BlurView
+                experimentalBlurMethod='dimezisBlurView'
+                intensity={90}
+                tint='light'
+                style={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '55%',
+                    padding: 16,
+                    bottom: 0
+                }}
+            >
+
+                <View style={styles.headerContainer}>
+                    <View style={styles.textContainer}>
+                        <Text variant="headlineLarge" style={styles.headertextStyle} >
+                            {t('updateReviewHeader')}
+                        </Text>
+                        <Text variant="titleMedium" style={styles.textStyle}>
+                            {t('updateReviewTitle')}
+                        </Text>
+                    </View>
                 </View>
-            </View>
-            <View style={styles.flexBody}>
-                <Formik
-                    initialValues={initialFormValues}
-                    onSubmit={PostHandler}
-                    validationSchema={yup.object().shape({
-                        rTitle: yup
-                            .string()
-                            .min(5)
-                            .required(),
-                        rMessage: yup
-                            .string()
-                            .min(5)
-                            .required(),
-                        rRate: yup
-                            .number()
-                            .max(5)
-                            .required(),
-                    })}>
+                <View style={styles.flexBody}>
+                    <Formik
+                        initialValues={initialFormValues}
+                        onSubmit={PostHandler}
+                        validationSchema={yup.object().shape({
+                            rTitle: yup
+                                .string()
+                                .min(5)
+                                .required(),
+                            rMessage: yup
+                                .string()
+                                .min(5)
+                                .required(),
+                            rRate: yup
+                                .number()
+                                .max(5)
+                                .required(),
+                        })}>
 
-                    {({ handleSubmit, handleChange, values, errors, setFieldTouched, touched, isValid }) => (
-                        <Fragment>
-                            <View>
+                        {({ handleSubmit, handleChange, values, errors, setFieldTouched, touched, isValid }) => (
+                            <Fragment>
                                 <View>
-                                    <Input
-                                        label={t('reviewTitle')}
-                                        value={values.rTitle}
-                                        onUpdateValue={handleChange('rTitle')}
-                                        onBlur={() => setFieldTouched('rTitle')}
-                                        isInvalid={touched.rTitle && errors.rTitle}
-                                        invalidText={errors.rTitle}
-                                    />
+                                    <View>
+                                        <Input
+                                            label={t('reviewTitle')}
+                                            placeholder={review.rTitle}
+                                            value={values.rTitle}
+                                            onUpdateValue={handleChange('rTitle')}
+                                            onBlur={() => setFieldTouched('rTitle')}
+                                            isInvalid={touched.rTitle && errors.rTitle}
+                                            invalidText={errors.rTitle}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Input
+                                            label={t('reviewMessage')}
+                                            placeholder={review.rMessage}
+                                            value={values.rMessage}
+                                            onUpdateValue={handleChange('rMessage')}
+                                            onBlur={() => setFieldTouched('rMessage')}
+                                            isInvalid={touched.rMessage && errors.rMessage}
+                                            invalidText={errors.rMessage}
+                                            multiline={true}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Input
+                                            label={t('reviewRate')}
+                                            placeholder={review.rRate}
+                                            value={values.rRate}
+                                            onUpdateValue={handleChange('rRate')}
+                                            onBlur={() => setFieldTouched('rRate')}
+                                            isInvalid={touched.rRate && errors.rRate}
+                                            invalidText={errors.rRate}
+                                        />
+                                    </View>
                                 </View>
-                                <View>
-                                    <Input
-                                        label={t('reviewMessage')}
-                                        value={values.rMessage}
-                                        onUpdateValue={handleChange('rMessage')}
-                                        onBlur={() => setFieldTouched('rMessage')}
-                                        isInvalid={touched.rMessage && errors.rMessage}
-                                        invalidText={errors.rMessage}
-                                        multiline={true}
-                                    />
-                                </View>
-                                <View>
-                                    <Input
-                                        label={t('reviewRate')}
-                                        value={values.rRate}
-                                        onUpdateValue={handleChange('rRate')}
-                                        onBlur={() => setFieldTouched('rRate')}
-                                        isInvalid={touched.rRate && errors.rRate}
-                                        invalidText={errors.rRate}
-                                    />
-                                </View>
-                            </View>
 
-                            <View style={styles.buttonStyle}>
-                                <Button
-                                    mode="elevated"
-                                    buttonColor={Colors.secondary}
-                                    textColor={Colors.tint}
-                                    onPress={handleSubmit}
-                                    disabled={!isValid || isSending}
-                                    loading={isSending}
-                                >
-                                    {t('send')}
-                                </Button>
-                            </View>
-                        </Fragment>
+                                <View style={styles.buttonStyle}>
+                                    <Button
+                                        mode="elevated"
+                                        buttonColor={Colors.secondary}
+                                        textColor={Colors.tint}
+                                        onPress={handleSubmit}
+                                        disabled={!isValid || isSending}
+                                        loading={isSending}
+                                    >
+                                        {t('send')}
+                                    </Button>
+                                </View>
+                            </Fragment>
 
-                    )}
-                </Formik>
-                <View style={styles.buttonStyle}>
-                    <Button
-                        mode="elevated"
-                        buttonColor={Colors.red}
-                        textColor={Colors.tint}
-                        icon={'comment-remove'}
-                        onPress={DeleteHandler}
-                        disabled={isSending}
-                        loading={isSending}
-                    >
-                        {t('delete')}
-                    </Button>
+                        )}
+                    </Formik>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            mode="elevated"
+                            buttonColor={Colors.red}
+                            textColor={Colors.tint}
+                            icon={'comment-remove'}
+                            onPress={DeleteHandler}
+                            disabled={isSending}
+                            loading={isSending}
+                        >
+                            {t('delete')}
+                        </Button>
+                    </View>
                 </View>
-            </View>
-
+            </BlurView>
         </View>
     );
 }
@@ -182,7 +217,6 @@ export default UpdateReview;
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        padding: 24,
     },
     headerContainer: {
         flex: 1,

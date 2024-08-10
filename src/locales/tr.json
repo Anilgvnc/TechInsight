@@ -47,5 +47,8 @@
     "emptyNotification": "Boş gözüküyor",
     "language": "Dil",
     "application-theme": "Uygulama teması",
+    "updates": "Güncellemeler",
+    "checkUpdates": "Güncellemeleri al",
+    "downloadUpdates": "Güncellemeyi indir",
     "logout": "Çıkış yap"
 }

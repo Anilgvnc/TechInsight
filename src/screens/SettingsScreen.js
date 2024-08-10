@@ -8,6 +8,7 @@ import { PreferencesContext } from '../store/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import TranslationButton from '../components/ui/TranslationButton';
 import { Colors } from '../constants/styles';
+import UpdatesCheck from '../components/ui/Updates';
 
 function SettingsScreen() {
     const authCtx = useContext(AuthContext);
@@ -18,6 +19,12 @@ function SettingsScreen() {
 
     return (
         <View style={styles.screen}>
+            <Card mode='outlined'>
+                <Card.Content style={styles.settingsContent}>
+                    <Text variant='titleMedium' style={styles.textStyle} >{t('updates')}</Text>
+                    <UpdatesCheck />
+                </Card.Content>
+            </Card>
             <Card mode='outlined'>
                 <Card.Content style={styles.settingsContent}>
                     <Text variant='titleMedium' style={styles.textStyle} >{t('language')}</Text>

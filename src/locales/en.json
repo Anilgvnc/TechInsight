@@ -47,5 +47,8 @@
     "emptyNotification": "Wow such an empty",
     "language": "Language",
     "application-theme": "Application theme",
+    "updates": "Updates",
+    "checkUpdates": "Check for updates",
+    "downloadUpdates": "Download update",
     "logout": "Logout"
 }

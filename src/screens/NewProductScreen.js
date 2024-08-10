@@ -9,6 +9,7 @@ import { Colors } from '../constants/styles';
 import { addProduct } from '../util/Https';
 import Input from '../components/authUi/Input';
 import { ProductsContext } from '../store/products-context';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const initialFormValues = {
     pName: '',
@@ -18,7 +19,7 @@ const initialFormValues = {
     createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 }
 
-function NewProductScreen() {
+function NewProductScreen({ navigation }) {
 
     const [isSending, setIsSending] = useState();
     const productsCtx = useContext(ProductsContext);
@@ -34,13 +35,13 @@ function NewProductScreen() {
                 t('sentSuccessfully')
             );
             setIsSending(false);
+            navigation.navigate('Main')
         } catch (error) {
             Alert.alert(
                 t('sentErrorTitle'),
                 t('sentError')
             );
         }
-        this.formValues.clear();
     }
 
     return (
@@ -78,51 +79,53 @@ function NewProductScreen() {
 
                     {({ handleSubmit, handleChange, values, errors, setFieldTouched, touched, isValid }) => (
                         <Fragment>
-                            <View>
+                            <ScrollView>
                                 <View>
-                                    <Input
-                                        label={t('productImg')}
-                                        value={values.url}
-                                        onUpdateValue={handleChange('url')}
-                                        onBlur={() => setFieldTouched('url')}
-                                        isInvalid={touched.url && errors.url}
-                                        invalidText={errors.url}
-                                        multiline={true}
-                                    />
+                                    <View>
+                                        <Input
+                                            label={t('productImg')}
+                                            value={values.url}
+                                            onUpdateValue={handleChange('url')}
+                                            onBlur={() => setFieldTouched('url')}
+                                            isInvalid={touched.url && errors.url}
+                                            invalidText={errors.url}
+                                            multiline={true}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Input
+                                            label={t('productName')}
+                                            value={values.pName}
+                                            onUpdateValue={handleChange('pName')}
+                                            onBlur={() => setFieldTouched('pName')}
+                                            isInvalid={touched.pName && errors.pName}
+                                            invalidText={errors.pName}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Input
+                                            label={t('productDescription')}
+                                            value={values.description}
+                                            onUpdateValue={handleChange('description')}
+                                            onBlur={() => setFieldTouched('description')}
+                                            isInvalid={touched.description && errors.description}
+                                            invalidText={errors.description}
+                                            multiline={true}
+                                        />
+                                    </View>
+                                    <View>
+                                        <Input
+                                            label={t('techSpecs')}
+                                            value={values.specifications}
+                                            onUpdateValue={handleChange('specifications')}
+                                            onBlur={() => setFieldTouched('specifications')}
+                                            isInvalid={touched.specifications && errors.specifications}
+                                            invalidText={errors.specifications}
+                                            multiline={true}
+                                        />
+                                    </View>
                                 </View>
-                                <View>
-                                    <Input
-                                        label={t('productName')}
-                                        value={values.pName}
-                                        onUpdateValue={handleChange('pName')}
-                                        onBlur={() => setFieldTouched('pName')}
-                                        isInvalid={touched.pName && errors.pName}
-                                        invalidText={errors.pName}
-                                    />
-                                </View>
-                                <View>
-                                    <Input
-                                        label={t('productDescription')}
-                                        value={values.description}
-                                        onUpdateValue={handleChange('description')}
-                                        onBlur={() => setFieldTouched('description')}
-                                        isInvalid={touched.description && errors.description}
-                                        invalidText={errors.description}
-                                        multiline={true}
-                                    />
-                                </View>
-                                <View>
-                                    <Input
-                                        label={t('techSpecs')}
-                                        value={values.specifications}
-                                        onUpdateValue={handleChange('specifications')}
-                                        onBlur={() => setFieldTouched('specifications')}
-                                        isInvalid={touched.specifications && errors.specifications}
-                                        invalidText={errors.specifications}
-                                        multiline={true}
-                                    />
-                                </View>
-                            </View>
+                            </ScrollView>
 
                             <View style={styles.buttonStyle}>
                                 <Button
