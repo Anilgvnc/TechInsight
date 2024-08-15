@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useContext } from 'react';
+import React, { useState, Fragment, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View, StyleSheet, Alert, Pressable } from 'react-native';
 import { Button, Text } from "react-native-paper";
@@ -7,40 +7,50 @@ import * as yup from 'yup';
 
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
-import { addReview } from '../../util/Https';
+import { deleteForum, fetchForum, updateForum } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
 import { BlurView } from 'expo-blur';
-import { ScrollView } from 'react-native-gesture-handler';
 
 
 const initialFormValues = {
-    rAuthor: '',
-    rMail: '',
-    rTitle: '',
-    rMessage: '',
-    rRate: '',
+    fAuthor: '',
+    fMail: '',
+    fTitle: '',
+    fMessage: '',
     createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 };
 
-function AddReview({ route, navigation }) {
+function UpdateForum({ route, navigation }) {
 
     //fetch id from route
-    const productName = route.params?.productId;
+    const forumName = route.params?.forumId;
 
     const [isSending, setIsSending] = useState(false);
-    //const productsCtx = useContext(ProductsContext);
+    const [forum, setForum] = useState({})
 
     //Set Author name
     const authCtx = useContext(AuthContext);
-    initialFormValues.rAuthor = authCtx.nameInfo;
-    initialFormValues.rMail = authCtx.mailInfo;
+    initialFormValues.fAuthor = authCtx.nameInfo;
 
     const { t } = useTranslation();
+
+    useEffect(() => {
+        async function getForum() {
+            try {
+                const forumData = await fetchForum(forumName);
+                setForum(forumData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+        getForum();
+    }, []);
 
     async function PostHandler(formValues) {
         setIsSending(true);
         try {
-            await addReview(productName, formValues);
+            await updateForum(forumName, formValues);
             //productsCtx.addProduct({ ...formValues, id: id })
             navigation.goBack();
         } catch (error) {
@@ -51,8 +61,32 @@ function AddReview({ route, navigation }) {
             console.log(error);
             setIsSending(false);
         }
-
     }
+
+    const DeleteHandler = () =>
+        Alert.alert(t('deleteAlertTitle'), t('deleteAlertMsg'), [
+            {
+                text: t('cancel'),
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: t('ok'), onPress: () => {
+                    setIsSending(true);
+                    try {
+                        deleteForum(forumName);
+                        navigation.goBack();
+                    } catch (error) {
+                        Alert.alert(
+                            t('sentErrorTitle'),
+                            t('sentError')
+                        );
+                        console.log(error);
+                        setIsSending(false);
+                    }
+                }
+            },
+        ]);
 
     return (
         <View style={styles.screen}>
@@ -67,18 +101,19 @@ function AddReview({ route, navigation }) {
                 style={{
                     position: 'absolute',
                     width: '100%',
-                    height: '55%',
+                    height: '60%',
                     padding: 16,
                     bottom: 0
                 }}
             >
+
                 <View style={styles.headerContainer}>
                     <View style={styles.textContainer}>
                         <Text variant="headlineLarge" style={styles.headertextStyle} >
-                            {t('addReviewHeader')}
+                            {t('updateReviewHeader')}
                         </Text>
                         <Text variant="titleMedium" style={styles.textStyle}>
-                            {t('addReviewTitle')}
+                            {t('updateReviewTitle')}
                         </Text>
                     </View>
                 </View>
@@ -95,10 +130,6 @@ function AddReview({ route, navigation }) {
                                 .string()
                                 .min(5)
                                 .required(),
-                            rRate: yup
-                                .number()
-                                .max(5)
-                                .required(),
                         })}>
 
                         {({ handleSubmit, handleChange, values, errors, setFieldTouched, touched, isValid }) => (
@@ -106,36 +137,29 @@ function AddReview({ route, navigation }) {
                                 <View>
                                     <View>
                                         <Input
-                                            label={t('reviewTitle')}
-                                            value={values.rTitle}
-                                            onUpdateValue={handleChange('rTitle')}
-                                            onBlur={() => setFieldTouched('rTitle')}
-                                            isInvalid={touched.rTitle && errors.rTitle}
-                                            invalidText={errors.rTitle}
+                                            label={t('forumTitle')}
+                                            placeholder={forum.fTitle}
+                                            value={values.fTitle}
+                                            onUpdateValue={handleChange('fTitle')}
+                                            onBlur={() => setFieldTouched('fTitle')}
+                                            isInvalid={touched.fTitle && errors.fTitle}
+                                            invalidText={errors.fTitle}
                                         />
                                     </View>
                                     <View>
                                         <Input
-                                            label={t('reviewMessage')}
-                                            value={values.rMessage}
-                                            onUpdateValue={handleChange('rMessage')}
-                                            onBlur={() => setFieldTouched('rMessage')}
-                                            isInvalid={touched.rMessage && errors.rMessage}
-                                            invalidText={errors.rMessage}
+                                            label={t('forumMessage')}
+                                            placeholder={forum.fMessage}
+                                            value={values.fMessage}
+                                            onUpdateValue={handleChange('fMessage')}
+                                            onBlur={() => setFieldTouched('fMessage')}
+                                            isInvalid={touched.fMessage && errors.fMessage}
+                                            invalidText={errors.fMessage}
                                             multiline={true}
                                         />
                                     </View>
-                                    <View>
-                                        <Input
-                                            label={t('reviewRate')}
-                                            value={values.rRate}
-                                            onUpdateValue={handleChange('rRate')}
-                                            onBlur={() => setFieldTouched('rRate')}
-                                            isInvalid={touched.rRate && errors.rRate}
-                                            invalidText={errors.rRate}
-                                        />
-                                    </View>
                                 </View>
+
                                 <View style={styles.buttonStyle}>
                                     <Button
                                         mode="elevated"
@@ -152,13 +176,26 @@ function AddReview({ route, navigation }) {
 
                         )}
                     </Formik>
+                    <View style={styles.buttonStyle}>
+                        <Button
+                            mode="elevated"
+                            buttonColor={Colors.red}
+                            textColor={Colors.tint}
+                            icon={'comment-remove'}
+                            onPress={DeleteHandler}
+                            disabled={isSending}
+                            loading={isSending}
+                        >
+                            {t('delete')}
+                        </Button>
+                    </View>
                 </View>
             </BlurView>
         </View>
     );
 }
 
-export default AddReview;
+export default UpdateForum;
 
 const styles = StyleSheet.create({
     screen: {

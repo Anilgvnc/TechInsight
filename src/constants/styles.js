@@ -3,7 +3,10 @@ export const Colors = {
     secondary: '#0093FB',
     tint: '#ffffff',
     shadow: '#000000',
-    red: '#d41111'
+    red: '#d41111',
+    checkBackground: '#4C6B22',
+    check: '#BEEE11',
+    priceBackground: '#344554'
 }
 
 export const HeaderOptions = {

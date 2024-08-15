@@ -10,6 +10,10 @@ import TabNavigator from './TabNavigator';
 import AboutProduct from '../screens/productScreens/AboutProduct';
 import AddReview from '../screens/productScreens/AddReview';
 import UpdateReview from '../screens/productScreens/UpdateReview';
+import ForumScreen from '../screens/forumScreens/ForumScreen';
+import UpdateForum from '../screens/forumScreens/UpdateForum';
+import AddForum from '../screens/forumScreens/AddForum';
+import AboutForum from '../screens/forumScreens/AboutForum';
 
 const Stack = createStackNavigator();
 
@@ -70,4 +74,26 @@ function AuthStack() {
     );
 }
 
-export { MainStack, AuthNavigation, AuthStack };
+function ForumStack() {
+    const { t } = useTranslation();
+    return (
+        <Stack.Navigator screenOptions={HeaderOptions}>
+            <Stack.Screen name='ForumScreen' component={ForumScreen} options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name='AboutForum' component={AboutForum} />
+            <Stack.Screen name='AddForum' component={AddForum} options={{
+                presentation: "transparentModal",
+                headerShown: false,
+                animation: "slide_from_bottom"
+            }} />
+            <Stack.Screen name='UpdateForum' component={UpdateForum} options={{
+                presentation: "transparentModal",
+                headerShown: false,
+                animation: "slide_from_bottom"
+            }} />
+        </Stack.Navigator>
+    );
+}
+
+export { MainStack, AuthNavigation, AuthStack, ForumStack };

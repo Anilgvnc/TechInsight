@@ -2,7 +2,7 @@
   "expo": {
     "name": "TechInsight",
     "slug": "techInsightApp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -51,6 +51,12 @@
             "useFrameworks": "static",
             "deploymentTarget": "13.4"
           }
+        }
+      ],
+      [
+        "expo-updates",
+        {
+          "username": "anilgvnc"
         }
       ]
     ],

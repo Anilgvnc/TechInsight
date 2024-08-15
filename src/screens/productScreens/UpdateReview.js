@@ -17,6 +17,7 @@ const initialFormValues = {
     rMail: '',
     rTitle: '',
     rMessage: '',
+    rRate: '',
     createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 };
 
@@ -103,7 +104,7 @@ function UpdateReview({ route, navigation }) {
                 style={{
                     position: 'absolute',
                     width: '100%',
-                    height: '55%',
+                    height: '60%',
                     padding: 16,
                     bottom: 0
                 }}

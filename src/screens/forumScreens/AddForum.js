@@ -7,41 +7,33 @@ import * as yup from 'yup';
 
 import { Colors } from '../../constants/styles';
 import Input from '../../components/authUi/Input';
-import { addReview } from '../../util/Https';
+import { addForum } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
 import { BlurView } from 'expo-blur';
-import { ScrollView } from 'react-native-gesture-handler';
-
 
 const initialFormValues = {
-    rAuthor: '',
-    rMail: '',
-    rTitle: '',
-    rMessage: '',
-    rRate: '',
+    fAuthor: '',
+    fMail: '',
+    fTitle: '',
+    fMessage: '',
     createdOn: new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear(),
 };
 
-function AddReview({ route, navigation }) {
-
-    //fetch id from route
-    const productName = route.params?.productId;
+function AddForum({ navigation }) {
 
     const [isSending, setIsSending] = useState(false);
-    //const productsCtx = useContext(ProductsContext);
 
     //Set Author name
     const authCtx = useContext(AuthContext);
-    initialFormValues.rAuthor = authCtx.nameInfo;
-    initialFormValues.rMail = authCtx.mailInfo;
+    initialFormValues.fAuthor = authCtx.nameInfo;
+    initialFormValues.fMail = authCtx.mailInfo;
 
     const { t } = useTranslation();
 
     async function PostHandler(formValues) {
         setIsSending(true);
         try {
-            await addReview(productName, formValues);
-            //productsCtx.addProduct({ ...formValues, id: id })
+            await addForum(formValues);
             navigation.goBack();
         } catch (error) {
             Alert.alert(
@@ -75,10 +67,10 @@ function AddReview({ route, navigation }) {
                 <View style={styles.headerContainer}>
                     <View style={styles.textContainer}>
                         <Text variant="headlineLarge" style={styles.headertextStyle} >
-                            {t('addReviewHeader')}
+                            {t('addForumHeader')}
                         </Text>
                         <Text variant="titleMedium" style={styles.textStyle}>
-                            {t('addReviewTitle')}
+                            {t('addForumTitle')}
                         </Text>
                     </View>
                 </View>
@@ -87,17 +79,13 @@ function AddReview({ route, navigation }) {
                         initialValues={initialFormValues}
                         onSubmit={PostHandler}
                         validationSchema={yup.object().shape({
-                            rTitle: yup
+                            fTitle: yup
                                 .string()
                                 .min(5)
                                 .required(),
-                            rMessage: yup
+                            fMessage: yup
                                 .string()
                                 .min(5)
-                                .required(),
-                            rRate: yup
-                                .number()
-                                .max(5)
                                 .required(),
                         })}>
 
@@ -106,33 +94,23 @@ function AddReview({ route, navigation }) {
                                 <View>
                                     <View>
                                         <Input
-                                            label={t('reviewTitle')}
-                                            value={values.rTitle}
-                                            onUpdateValue={handleChange('rTitle')}
-                                            onBlur={() => setFieldTouched('rTitle')}
-                                            isInvalid={touched.rTitle && errors.rTitle}
-                                            invalidText={errors.rTitle}
+                                            label={t('forumTitle')}
+                                            value={values.fTitle}
+                                            onUpdateValue={handleChange('fTitle')}
+                                            onBlur={() => setFieldTouched('fTitle')}
+                                            isInvalid={touched.fTitle && errors.fTitle}
+                                            invalidText={errors.fTitle}
                                         />
                                     </View>
                                     <View>
                                         <Input
-                                            label={t('reviewMessage')}
-                                            value={values.rMessage}
-                                            onUpdateValue={handleChange('rMessage')}
-                                            onBlur={() => setFieldTouched('rMessage')}
-                                            isInvalid={touched.rMessage && errors.rMessage}
-                                            invalidText={errors.rMessage}
+                                            label={t('forumMessage')}
+                                            value={values.fMessage}
+                                            onUpdateValue={handleChange('fMessage')}
+                                            onBlur={() => setFieldTouched('fMessage')}
+                                            isInvalid={touched.fMessage && errors.fMessage}
+                                            invalidText={errors.fMessage}
                                             multiline={true}
-                                        />
-                                    </View>
-                                    <View>
-                                        <Input
-                                            label={t('reviewRate')}
-                                            value={values.rRate}
-                                            onUpdateValue={handleChange('rRate')}
-                                            onBlur={() => setFieldTouched('rRate')}
-                                            isInvalid={touched.rRate && errors.rRate}
-                                            invalidText={errors.rRate}
                                         />
                                     </View>
                                 </View>
@@ -158,27 +136,14 @@ function AddReview({ route, navigation }) {
     );
 }
 
-export default AddReview;
+export default AddForum;
 
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
     },
-    headerContainer: {
-        flex: 1,
-        alignContent: 'space-between',
-        flexDirection: 'row',
-    },
     flexBody: {
         flex: 6
-    },
-    textContainer: {
-        flex: 3
-    },
-    headertextStyle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: Colors.secondary,
     },
     buttonStyle: {
         padding: 16,

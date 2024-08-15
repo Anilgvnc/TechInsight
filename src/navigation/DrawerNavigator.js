@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { HeaderOptions } from '../constants/styles';
 import MainScreen from '../screens/MainScreen';
 import ProductControl from '../screens/ProductControlScreen';
+import { ForumStack } from './StackNavigator';
 
 const Drawer = createDrawerNavigator();
 
@@ -42,6 +43,14 @@ function DrawerNavigator() {
           title: t('prodControl'),
           drawerIcon: () => (
             <Ionicons name="barcode-outline" size={24} />
+          )
+        }}
+      />
+      <Drawer.Screen name='Forum' component={ForumStack}
+        options={{
+          title: t('forum'),
+          drawerIcon: () => (
+            <Ionicons name='chatbubbles-outline' size={24} />
           )
         }}
       />

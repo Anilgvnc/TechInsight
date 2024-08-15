@@ -20,7 +20,7 @@ function SettingsScreen() {
     return (
         <View style={styles.screen}>
             <Card mode='outlined'>
-                <Card.Content style={styles.settingsContent}>
+                <Card.Content>
                     <Text variant='titleMedium' style={styles.textStyle} >{t('updates')}</Text>
                     <UpdatesCheck />
                 </Card.Content>

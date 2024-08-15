@@ -139,6 +139,89 @@ export function deleteReview(productId, reviewId) {
     return axios.delete(backendUrl + `/product/${productId}/reviews/${reviewId}.json`);
 }
 
+//Forum
+export async function addForum(forumData) {
+    const response = await axios.post(backendUrl + '/forums.json', forumData);
+    const id = response.data.name;
+    return id;
+}
+
+export async function fetchForums() {
+    const response = await axios.get(backendUrl + '/forums.json/');
+
+    const forums = [];
+
+    for (const key in response.data) {
+        const forumData = {
+            id: key,
+            fAuthor: response.data[key].fAuthor,
+            fMail: response.data[key].fMail,
+            fTitle: response.data[key].fTitle,
+            fMessage: response.data[key].fMessage,
+            date: response.data[key].createdOn,
+        }
+        forums.push(forumData);
+    }
+    return forums;
+}
+
+export async function fetchForum(forumId) {
+    const response = await axios.get(backendUrl + `/forums/${forumId}.json`);
+
+    const forumData = {
+        fAuthor: response.data.fAuthor,
+        fMail: response.data.fMail,
+        fTitle: response.data.fTitle,
+        fMessage: response.data.fMessage,
+        date: response.data.createdOn
+    }
+
+    return forumData;
+}
+
+export function updateForum(forumId, forumData) {
+    return axios.put(backendUrl + `/forums/${forumId}.json`, forumData);
+}
+
+export function deleteForum(forumId) {
+    return axios.delete(backendUrl + `/forums/${forumId}.json`);
+}
+
+//Forum reply
+export async function addReply(forumId, replyData) {
+    const response = axios.post(backendUrl + `/forums/${forumId}/replys.json`, replyData);
+    const id = response.data.name;
+    return id;
+}
+
+export async function fetchReplys(forumId) {
+    const response = axios.get(backendUrl + `/forums/${forumId}/replys.json`);
+
+    const replys = [];
+
+    for (const key in response.data) {
+        const replyData = {
+            id: key,
+            rAuthor: response.data[key].rAuthor,
+            rMail: response.data[key].rMail,
+            rTitle: response.data[key].rTitle,
+            rMessage: response.data[key].rMessage,
+            date: response.data[key].createdOn
+        }
+        replys.push(replyData);
+    }
+
+    return replys;
+}
+
+export function updateReply(forumId, replyId, replyData) {
+    return axios.put(backendUrl + `/forums/${forumId}/replys/${replyId}.json`, replyData);
+}
+
+export function deleteReply(forumId, replyId) {
+    return axios.delete(backendUrl + `/forums/${forumId}/replys/${replyId}.json`);
+}
+
 /*
 //Get point of user
 export function getPoints(userMail) {
