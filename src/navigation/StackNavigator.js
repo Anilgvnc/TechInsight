@@ -14,6 +14,8 @@ import ForumScreen from '../screens/forumScreens/ForumScreen';
 import UpdateForum from '../screens/forumScreens/UpdateForum';
 import AddForum from '../screens/forumScreens/AddForum';
 import AboutForum from '../screens/forumScreens/AboutForum';
+import AddReply from '../screens/forumScreens/AddReply';
+import UpdateReply from '../screens/forumScreens/UpdateReply';
 
 const Stack = createStackNavigator();
 
@@ -81,13 +83,25 @@ function ForumStack() {
             <Stack.Screen name='ForumScreen' component={ForumScreen} options={{
                 headerShown: false
             }} />
-            <Stack.Screen name='AboutForum' component={AboutForum} />
+            <Stack.Screen name='AboutForum' component={AboutForum} options={{
+                title: t('aboutForum')
+            }} />
             <Stack.Screen name='AddForum' component={AddForum} options={{
                 presentation: "transparentModal",
                 headerShown: false,
                 animation: "slide_from_bottom"
             }} />
             <Stack.Screen name='UpdateForum' component={UpdateForum} options={{
+                presentation: "transparentModal",
+                headerShown: false,
+                animation: "slide_from_bottom"
+            }} />
+            <Stack.Screen name='AddReply' component={AddReply} options={{
+                presentation: "transparentModal",
+                headerShown: false,
+                animation: "slide_from_bottom"
+            }} />
+            <Stack.Screen name='UpdateReply' component={UpdateReply} options={{
                 presentation: "transparentModal",
                 headerShown: false,
                 animation: "slide_from_bottom"

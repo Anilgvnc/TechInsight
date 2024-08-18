@@ -3,11 +3,13 @@ import { View, StyleSheet, FlatList, TouchableOpacity, Alert, Platform } from 'r
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { Card, Text, Searchbar, FAB } from 'react-native-paper';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { fetchForums } from '../../util/Https';
 import { Colors } from '../../constants/styles';
 
 function ForumScreen() {
+    const insets = useSafeAreaInsets();
     const navigation = useNavigation();
     const { t } = useTranslation();
 
@@ -53,7 +55,17 @@ function ForumScreen() {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
+        <View style={{
+            flex: 1,
+            margin: 16,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // Paddings to handle safe area
+            paddingTop: insets.top,
+            paddingBottom: insets.bottom,
+            paddingLeft: insets.left,
+            paddingRight: insets.right,
+        }}>
             <Searchbar
                 placeholder="Search"
                 style={{ marginBottom: 16 }}
@@ -116,8 +128,8 @@ const styles = StyleSheet.create({
     },
     fab: {
         position: 'absolute',
-        marginBottom: 40,
-        marginEnd: 18,
+        marginBottom: 28,
+        marginEnd: 16,
         right: 0,
         bottom: 0,
     },

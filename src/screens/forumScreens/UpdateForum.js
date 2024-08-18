@@ -40,7 +40,7 @@ function UpdateForum({ route, navigation }) {
                 const forumData = await fetchForum(forumName);
                 setForum(forumData);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
 
@@ -110,10 +110,10 @@ function UpdateForum({ route, navigation }) {
                 <View style={styles.headerContainer}>
                     <View style={styles.textContainer}>
                         <Text variant="headlineLarge" style={styles.headertextStyle} >
-                            {t('updateReviewHeader')}
+                            {t('updateForumHeader')}
                         </Text>
                         <Text variant="titleMedium" style={styles.textStyle}>
-                            {t('updateReviewTitle')}
+                            {t('updateForumTitle')}
                         </Text>
                     </View>
                 </View>

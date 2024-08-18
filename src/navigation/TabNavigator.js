@@ -8,6 +8,7 @@ import AccountScreen from '../screens/AccountScreen';
 import { Colors } from '../constants/styles';
 
 import DrawerNavigator from './DrawerNavigator';
+import { ForumStack } from './StackNavigator';
 
 
 const Tab = createBottomTabNavigator();
@@ -29,7 +30,11 @@ function TabNavigator() {
 
             if (route.name === 'Main Page') {
               iconName = 'home'
-            } else if (route.name === 'Notifications') {
+            }
+            else if (route.name === 'Forum') {
+              iconName = 'chatbubbles-outline'
+            }
+            else if (route.name === 'Notifications') {
               iconName = 'notifications'
             }
             else if (route.name === 'Account') {
@@ -48,7 +53,9 @@ function TabNavigator() {
       <Tab.Screen name="Main Page" component={DrawerNavigator}
         options={{ title: t('mainPage') }}
       />
-
+      <Tab.Screen name="Forum" component={ForumStack}
+        options={{ title: t('forum') }}
+      />
       <Tab.Screen name="Notifications" component={NotificationScreen}
         options={{
           title: t('notifications'),

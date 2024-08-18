@@ -175,7 +175,6 @@ export async function fetchForum(forumId) {
         fMessage: response.data.fMessage,
         date: response.data.createdOn
     }
-
     return forumData;
 }
 
@@ -189,13 +188,13 @@ export function deleteForum(forumId) {
 
 //Forum reply
 export async function addReply(forumId, replyData) {
-    const response = axios.post(backendUrl + `/forums/${forumId}/replys.json`, replyData);
+    const response = await axios.post(backendUrl + `/forums/${forumId}/replys.json`, replyData);
     const id = response.data.name;
     return id;
 }
 
 export async function fetchReplys(forumId) {
-    const response = axios.get(backendUrl + `/forums/${forumId}/replys.json`);
+    const response = await axios.get(backendUrl + `/forums/${forumId}/replys.json/`);
 
     const replys = [];
 
@@ -210,8 +209,21 @@ export async function fetchReplys(forumId) {
         }
         replys.push(replyData);
     }
-
     return replys;
+}
+
+export async function fetchReply(forumId, replyId) {
+    const response = await axios.get(backendUrl + `/forums/${forumId}/replys/${replyId}.json`);
+
+    const review = {
+        rAuthor: response.data.rAuthor,
+        rMail: response.data.rMail,
+        rTitle: response.data.rTitle,
+        rMessage: response.data.rMessage,
+        date: response.data.createdOn
+    };
+
+    return review;
 }
 
 export function updateReply(forumId, replyId, replyData) {

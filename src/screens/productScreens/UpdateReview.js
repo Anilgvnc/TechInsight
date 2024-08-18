@@ -43,7 +43,7 @@ function UpdateReview({ route, navigation }) {
                 const review = await fetchReview(productName, reviewName);
                 setReview(review);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
 

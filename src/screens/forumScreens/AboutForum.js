@@ -1,9 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Card, Text, FAB, List, IconButton } from 'react-native-paper';
-import { Rating } from 'react-native-ratings';
+import { Card, Text, FAB, IconButton } from 'react-native-paper';
 
-import { fetchForum, fetchReplys, fetchReviews, getProduct } from '../../util/Https';
+import { fetchForum, fetchReplys } from '../../util/Https';
 import { Colors } from '../../constants/styles';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../../store/auth-context';
@@ -16,16 +15,16 @@ function AboutForum({ route, navigation }) {
     const [replyList, setReplyList] = useState([]);
     const forumName = route.params?.forumId;
 
-    function UpdateForumHandler(forumName) {
+    function UpdateForumHandler() {
         navigation.navigate('UpdateForum', { forumId: forumName });
     }
 
     function addReplyHandler() {
-        navigation.navigate('AddReview', { forumId: forumName })
+        navigation.navigate('AddReply', { forumId: forumName })
     }
 
     function UpdateReplyHandler(replyName) {
-        navigation.navigate('UpdateReview', { forumId: forumName, replyId: replyName });
+        navigation.navigate('UpdateReply', { forumId: forumName, replyId: replyName });
     }
 
     useEffect(() => {
@@ -64,7 +63,7 @@ function AboutForum({ route, navigation }) {
                                 (<IconButton
                                     icon="pencil"
                                     iconColor={Colors.primary}
-                                    onPress={() => { UpdateForumHandler(forumList.id) }}
+                                    onPress={() => { UpdateForumHandler() }}
                                     size={24}
                                 />)
                                 : (<Text style={styles.reviewAuthor}>{forumList.fAuthor}</Text>)
@@ -103,7 +102,7 @@ function AboutForum({ route, navigation }) {
             />
             <FAB
                 icon="plus"
-                label={t('addReview')}
+                label={t('addReply')}
                 style={styles.fab}
                 onPress={() => { addReplyHandler() }}
                 backgroundColor={Colors.secondary}
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     reviewContainer: {
-        width: 308,
+        width: 380,
         height: 'auto',
         marginBottom: 4
     },

@@ -67,7 +67,7 @@ function AddForum({ navigation }) {
                 <View style={styles.headerContainer}>
                     <View style={styles.textContainer}>
                         <Text variant="headlineLarge" style={styles.headertextStyle} >
-                            {t('addForumHeader')}
+                            {t('addForum')}
                         </Text>
                         <Text variant="titleMedium" style={styles.textStyle}>
                             {t('addForumTitle')}
@@ -144,6 +144,16 @@ const styles = StyleSheet.create({
     },
     flexBody: {
         flex: 6
+    },
+    headerContainer: {
+        flex: 1,
+        alignContent: 'space-between',
+        flexDirection: 'row',
+    },
+    headertextStyle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: Colors.secondary,
     },
     buttonStyle: {
         padding: 16,

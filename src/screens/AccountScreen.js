@@ -4,11 +4,12 @@ import { List, Avatar, Card, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AuthContext } from '../store/auth-context';
 import { Colors } from '../constants/styles';
+import { useTranslation } from 'react-i18next';
 
 function AccountScreen() {
 
     const insets = useSafeAreaInsets();
-
+    const { t } = useTranslation();
     const authCtx = useContext(AuthContext);
 
     return (
@@ -27,7 +28,7 @@ function AccountScreen() {
                 <Card.Content>
 
                     <List.Item
-                        title="User Name"
+                        title={t('user')}
                         description={authCtx.nameInfo}
                         left={props => <Avatar.Image style={styles.avatar} size={64} source={require('../../assets/icon.png')} color='000000' alignContent='center' />}
                     />

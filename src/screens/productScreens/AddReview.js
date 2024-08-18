@@ -10,7 +10,6 @@ import Input from '../../components/authUi/Input';
 import { addReview } from '../../util/Https';
 import { AuthContext } from '../../store/auth-context';
 import { BlurView } from 'expo-blur';
-import { ScrollView } from 'react-native-gesture-handler';
 
 
 const initialFormValues = {
